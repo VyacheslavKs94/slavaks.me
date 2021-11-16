@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/css/main.css">
+    <meta charset="UTF-8"/>
+    <meta name="http-equiv" content="Content-type: text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>VIP-переводы</title>
+</head>
+<body>
+    <nav class="nav-bar">
+        <img src="/img/toolslogo.png">
+        <h2>Перевод названия деталей ИЛИ Template ID (Ult Purrmobile, Ult Twin mill HW и т.д.)</h2>
+        <h3>Текст не должен содержать знаки -, "" и т.д. или количество деталей — х2, х50 и пр.</h2>
+    </nav>
+<table class="center">
+    <tbody>
+      <tr>
+        <td>
+            <div class="div1">
+                <textarea id="input" rows="6" cols="50">Вставь текст сюда…</textarea>
+                <p></p>
+                <button type="button">ПЕРЕВОД <img src="/img/translate.png" width=16px height=16px></button>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+</table>
+<p></p>
+<table class="center">
+    <tbody>
+      <tr>
+        <td>
+            <div class="div2en">
+                        <h3>На английский</h3>
+                    <textarea id="outputEN" rows="8" cols="50"></textarea>
+            </div>
+        </td>
+        <td>
+            <div class="div3ru">
+                <span class="toRus">
+                    <h3>На русский</h3><textarea id="outputRU" rows="8" cols="50"></textarea>
+                </span>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+</table>
+<table class="center">
+    <tbody>
+      <tr>
+        <td>
+            <div class="div4zh">
+                <h3>На упрощенный китайский</h3><textarea id="outputZH" rows="8" cols="50"></textarea>
+             </div>
+        </td>
+        <td>
+            <div class="div5id">
+                <h3>На TemplateIDйский</h3><textarea id="outputID" rows="8" cols="50"></textarea>
+             </div>
+        </td>
+      </tr>
+    </tbody>
+</table>
+ <p></p>
+ <table class="center">
+    <tbody>
+      <tr>
+        <td>
+            <div class="div6ult">
+                <h2>Перевод ультимативной валюты</h2>
+                <h3>Введи количество ультимативной валюты</h3>
+                <p></p>
+                <input type="text" value='' id="ultCashInput">
+                <p></p>
+                <button id="translateUltButton">Перевести</button>
+                <p></p>
+                <textarea id="ultCashOutput" rows="3" cols="30"></textarea>
+            </div>
+        </td>
+        <p></p>
+        <td>
+            <div class="div7tok">
+                <h2>Перевод токенов</h2>
+                <h3>Введи количество токенов</h3>
+                <input type="text" value='' id="tokensInput">
+                <p></p>
+                <button id="translateTokensButton">Перевести</button>
+                <p></p>
+                <textarea id="tokensOutput" rows="3" cols="30"></textarea>
+            </div>
+        </td>
+        <td>
+            <div class="div8jok">
+                <h2>Перевод Джокерa</h2>
+                <h3>Введи количество карточек джокера</h3>
+                <input type="text" value='' id="jokersInput">
+                <p></p>
+                <button id="translateJokersButton">Перевести</button>
+                <p></p>
+                <textarea id="jokersOutput" rows="3" cols="30"></textarea>
+            </div>
+        </td>
+      </tr>
+    </tbody>
+</table>
+<p>База данных актуальна на 15.11.2021</p>
+
+<script src="/js/translate.js" charset="utf-8"></script>
+</body>
+</html>
