@@ -18,7 +18,7 @@ const getFile = async () => {
     const outputEN = document.querySelector('#outputEN');
     const outputRU = document.querySelector('#outputRU');
     const outputZH = document.querySelector('#outputZH');
-    const outputID = document.querySelector('#outputID'); // Template ID
+    const outputID = document.querySelector('#outputID'); // TemplateID
     mySearchButton.addEventListener('click', function () {
       outputEN.value = '';
       outputRU.value = '';
