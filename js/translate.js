@@ -19,6 +19,13 @@ const getFile = async () => {
     const outputRU = document.querySelector('#outputRU');
     const outputZH = document.querySelector('#outputZH');
     const outputID = document.querySelector('#outputID'); // TemplateID
+
+    myTextArea.addEventListener(`click`, function () { // Remove text on click, но костылями
+      if (myTextArea.value === 'Сюда вставлять названия для переводов') {
+      myTextArea.value = '';
+      }
+    });
+
     mySearchButton.addEventListener('click', function () {
       outputEN.value = '';
       outputRU.value = '';
