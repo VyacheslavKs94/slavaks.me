@@ -9,11 +9,18 @@ const getFile = async () => {
     }
   };
 
-  function copyeng() {
-    var copyTranslation = document.getElementById("outputEN");
-    copyTranslation.select();
-    navigator.clipboard.writeText(copyTranslation.value);
-    alert("Перевод скопирован");
+  function copyEng() { //кнопка копирования английского текста
+    var copyEngTranslation = document.getElementById("outputEN");
+    copyEngTranslation.select();
+    navigator.clipboard.writeText(copyEngTranslation.value);
+
+    var tooltipbtn = document.getElementById("translateTooltip");
+    tooltip.innterHTML = "Перевод скопирован";
+  }
+
+  function outFunc () {
+    var tooltipbtn = document.getElementById("translateTooltip");
+    tooltip.innterHTML = "Скопировать перевод";
   }
   
   const allMyCode = async () => {
