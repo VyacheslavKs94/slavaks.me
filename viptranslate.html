@@ -46,9 +46,9 @@
             <div class="div2en">
                     <h3>Английский</h3>
                         <textarea id="outputEN" rows="8" cols="50"></textarea>
-                        <div class="tooltipbtn">
+                        <div class="tooltipbtn"> <!-- Кнопка перевода на англ -->
                             <button onclick="copyEng()" onmouseout="outFunc()">
-                        <span class="tooltiptext" id="translateTooltip">Скопировать текст</span>
+                        <span class="tooltiptext" id="translateTooltip">Скопировать перевод</span>
                         Скопировать
                     </button>
                 </div>
@@ -59,6 +59,11 @@
                 <span class="toRus">
                     <h3>Русский</h3>
                     <textarea id="outputRU" rows="8" cols="50"></textarea>
+                    <div class="tooltipbtn"> <!-- Кнопка перевода на рус -->
+                        <button onclick="copyRus()" onmouseout="outFunc()">
+                    <span class="tooltiptext" id="translateTooltip">Скопировать перевод</span>
+                    Скопировать
+                </button>
                 </span>
             </div>
         </td>

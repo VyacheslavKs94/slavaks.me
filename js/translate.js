@@ -18,7 +18,17 @@ const getFile = async () => {
     tooltipbtn.innerHTML = "Перевод скопирован";
   }
 
-  function outFunc () {
+  function copyRus() { //кнопка копирования английского текста
+    var copyRusTranslation = document.getElementById("outputRU");
+    copyRusTranslation.select();
+    navigator.clipboard.writeText(copyRusTranslation.value);
+
+    var tooltipbtn = document.getElementById("translateTooltip");
+    tooltipbtn.innerHTML = "Перевод скопирован";
+  }
+
+
+  function outFunc () { //наведение курсора на кнопку перевода
     var tooltipbtn = document.getElementById("translateTooltip");
     tooltipbtn.innerHTML = "Скопировать перевод";
   }
