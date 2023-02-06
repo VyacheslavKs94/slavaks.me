@@ -20,6 +20,18 @@ h1 {
 
 .div1 {text-align: center;}
 
+.trnsltbtn {
+  font-family: Rubik;
+  font-size: medium;
+}
+
+.trnsltimg {
+  position: center;
+  width: 14px;
+  height: 14px;
+
+}
+
 table, th {
     border: 1px solid black;
     border-spacing: 10px;
@@ -84,7 +96,6 @@ text-align: center;
 
 .tooltipbtn {
   position: relative;
-  display: inline-block;
 }
 
 .tooltipbtn .tooltiptext {
@@ -117,5 +128,5 @@ text-align: center;
 
 .tooltipbtn:hover .tooltiptext {
   visibility: visible;
-  opacity: 1;
+  opacity: 0.8;
 }
