@@ -104,8 +104,6 @@ const getFile = async () => {
           translationObjects.push(obj);
         }
       }
-
-
   
       const lines = myFile.split('\n');
       const myLine = lines.find(processLine);
