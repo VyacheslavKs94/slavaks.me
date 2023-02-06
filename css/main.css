@@ -77,3 +77,7 @@ text-align: center;
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+.word_results {
+  text-align: center;
+}
