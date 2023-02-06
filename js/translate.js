@@ -1,6 +1,6 @@
 const getFile = async () => {
     try {
-      const response = await fetch('https://slavaks.me/cats.csv');
+      const response = await fetch('./cats.csv');
       const result = await response.text();
       return result;
     } catch (err) {
@@ -15,7 +15,7 @@ const getFile = async () => {
     navigator.clipboard.writeText(copyEngTranslation.value);
 
     var tooltipbtn = document.getElementById("translateTooltip");
-    tooltipbtn.innerHTML = "Перевод скопирован";
+    tooltipbtn.textContent = "Перевод скопирован";
   }
 
   function copyRus() { //кнопка копирования английского текста
@@ -24,13 +24,13 @@ const getFile = async () => {
     navigator.clipboard.writeText(copyRusTranslation.value);
 
     var tooltipbtn = document.getElementById("translateTooltip");
-    tooltipbtn.innerHTML = "Перевод скопирован";
+    tooltipbtn.textContent = "Перевод скопирован";
   }
 
 
   function outFunc () { //наведение курсора на кнопку перевода
     var tooltipbtn = document.getElementById("translateTooltip");
-    tooltipbtn.innerHTML = "Скопировать перевод";
+    tooltipbtn.textContent = "Скопировать перевод";
   }
   
   const allMyCode = async () => {
@@ -45,7 +45,7 @@ const getFile = async () => {
     const outputID = document.querySelector('#outputID'); // TemplateID
 
     myTextArea.addEventListener(`click`, function () { // Remove text on click, но костылями
-      if (myTextArea.value === 'Сюда вставлять названия для переводов') {
+      if (myTextArea.value === 'Вставьте названия предметов') {
       myTextArea.value = '';
       }
     });
