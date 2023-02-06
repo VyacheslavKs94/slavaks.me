@@ -10,7 +10,7 @@ const getFile = async () => {
   };
 
   function copyeng() {
-    var copyTranslation = document.getElementById("#outputEN");
+    var copyTranslation = document.getElementById("outputEN");
     copyTranslation.select();
     navigator.clipboard.writeText(copyTranslation.value);
     alert("Перевод скопирован");
