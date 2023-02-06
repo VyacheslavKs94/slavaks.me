@@ -9,6 +9,13 @@ const getFile = async () => {
     }
   };
   
+  function copyeng() {
+    var copyTranslation = document.getElementById("outputEN");
+    copyTranslation.select();
+    navigator.clipboard.writeText(copyTranslation.value);
+    alert("Перевод скопирован");
+  }
+  
   const allMyCode = async () => {
   
     const myFile = await getFile();
@@ -81,12 +88,7 @@ const getFile = async () => {
         }
       }
 
-      function copyeng() {
-        var copyTranslation = document.getElementById("outputEN");
-        copyTranslation.select();
-        navigator.clipboard.writeText(copyTranslation.value);
-        alert("Перевод скопирован");
-      }
+
   
       const lines = myFile.split('\n');
       const myLine = lines.find(processLine);
