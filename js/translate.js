@@ -15,12 +15,12 @@ const getFile = async () => {
     navigator.clipboard.writeText(copyEngTranslation.value);
 
     var tooltipbtn = document.getElementById("translateTooltip");
-    tooltip.innerHTML = "Перевод скопирован";
+    tooltipbtn.innerHTML = "Перевод скопирован";
   }
 
   function outFunc () {
     var tooltipbtn = document.getElementById("translateTooltip");
-    tooltip.innerHTML = "Скопировать перевод";
+    tooltipbtn.innerHTML = "Скопировать перевод";
   }
   
   const allMyCode = async () => {
