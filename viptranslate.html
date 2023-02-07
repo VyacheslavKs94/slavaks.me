@@ -44,9 +44,9 @@
             <div class="div2en">
                     <h3>Английский</h3>
                         <textarea id="outputEN" rows="8" cols="50"></textarea>
-                        <div class="tooltipbtn"> <!-- Кнопка перевода на англ -->
-                            <button onclick="copyEng()" onmouseout="outFunc()">
-                        <span class="tooltiptext" id="translateTooltip">Скопировать перевод</span>
+                        <div class="tooltipbtn"> <!-- Кнопка копипасты англ -->
+                            <button onclick="copyEng()" onmouseout="outFuncEng()">
+                        <span class="tooltiptext" id="translateTooltipEng">Скопировать перевод</span>
                         Скопировать
                     </button>
                 </div>
@@ -57,9 +57,9 @@
                 <span class="toRus">
                     <h3>Русский</h3>
                     <textarea id="outputRU" rows="8" cols="50"></textarea>
-                    <div class="tooltipbtn"> <!-- Кнопка перевода на рус -->
-                        <button onclick="copyRus()" onmouseout="outFunc()">
-                    <span class="tooltiptext" id="translateTooltip">Скопировать перевод</span>
+                    <div class="tooltipbtn"> <!-- Кнопка копипасты рус -->
+                        <button onclick="copyRus()" onmouseout="outFuncRus()">
+                    <span class="tooltiptext" id="translateTooltipRus">Скопировать перевод</span>
                     Скопировать
                 </button>
                 </span>
@@ -73,6 +73,11 @@
             <div class="div4zh">
                 <h3>Упрощенный китайский</h3>
                 <textarea id="outputZH" rows="8" cols="50"></textarea>
+                <div class="tooltipbtn"> <!-- Кнопка копипасты китайского -->
+                    <button onclick="copyZh()" onmouseout="outFuncZh()">
+                <span class="tooltiptext" id="translateTooltipZh">Скопировать перевод</span>
+                Скопировать
+            </button>
              </div>
         </td>
         <td>

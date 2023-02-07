@@ -14,22 +14,41 @@ const getFile = async () => {
     copyEngTranslation.select();
     navigator.clipboard.writeText(copyEngTranslation.value);
 
-    var tooltipbtn = document.getElementById("translateTooltip");
+    var tooltipbtn = document.getElementById("translateTooltipEng");
     tooltipbtn.textContent = "Перевод скопирован";
   }
 
-  function copyRus() { //кнопка копирования английского текста
+  function copyRus() { //кнопка копирования русского текста
     var copyRusTranslation = document.getElementById("outputRU");
     copyRusTranslation.select();
     navigator.clipboard.writeText(copyRusTranslation.value);
 
-    var tooltipbtn = document.getElementById("translateTooltip");
+    var tooltipbtn = document.getElementById("translateTooltipRus");
+    tooltipbtn.textContent = "Перевод скопирован";
+  }
+
+  function copyZh() { //кнопка копирования китайского текста
+    var copyZhTranslation = document.getElementById("outputZH");
+    copyZhTranslation.select();
+    navigator.clipboard.writeText(copyZhTranslation.value);
+
+    var tooltipbtn = document.getElementById("translateTooltipZh");
     tooltipbtn.textContent = "Перевод скопирован";
   }
 
 
-  function outFunc () { //наведение курсора на кнопку перевода
-    var tooltipbtn = document.getElementById("translateTooltip");
+  function outFuncEng () { //наведение курсора на кнопку перевода
+    var tooltipbtn = document.getElementById("translateTooltipEng");
+    tooltipbtn.textContent = "Скопировать перевод";
+  }
+
+  function outFuncRus () { //наведение курсора на кнопку перевода
+    var tooltipbtn = document.getElementById("translateTooltipRus");
+    tooltipbtn.textContent = "Скопировать перевод";
+  }
+
+  function outFuncZh () { //наведение курсора на кнопку перевода
+    var tooltipbtn = document.getElementById("translateTooltipZh");
     tooltipbtn.textContent = "Скопировать перевод";
   }
   
