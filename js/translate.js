@@ -75,7 +75,10 @@ const getFile = async () => {
       outputZH.value = '';
       outputID.value = '';
       searchTerms = myTextArea.value.split('\n');
-      const results = searchTerms.map(translateOneLine);
+      const results = searchTerms.map(function(searchTerm) {
+        searchTerm = searchTerm.replace(/^-\s*/, "");
+        return translateOneLine(searchTerm);
+            });
   
       results.forEach(function (result) {
         result.forEach(function (phrase) {
