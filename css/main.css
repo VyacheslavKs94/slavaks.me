@@ -8,3 +8,16 @@ body {
 h1 {
     color: rgba(13, 4, 24, 0.945)
 };
+  
+table, th {
+    border: 1px solid black;
+    border-spacing: 10px;
+    gap: 10px;
+    text-align: center;
+    margin: 0 auto 0 auto;
+}
+  
+table.center {
+    margin-left: auto; 
+    margin-right: auto;
+}
