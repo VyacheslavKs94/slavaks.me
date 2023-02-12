@@ -16,7 +16,7 @@ const getFile = async () => {
 
     var tooltipbtn = document.getElementById("translateTooltipEng");
     tooltipbtn.textContent = "Перевод скопирован";
-  }
+  };
 
   function copyRus() { //кнопка копирования русского текста
     var copyRusTranslation = document.getElementById("outputRU");
@@ -25,7 +25,7 @@ const getFile = async () => {
 
     var tooltipbtn = document.getElementById("translateTooltipRus");
     tooltipbtn.textContent = "Перевод скопирован";
-  }
+  };
 
   function copyZh() { //кнопка копирования китайского текста
     var copyZhTranslation = document.getElementById("outputZH");
@@ -34,23 +34,22 @@ const getFile = async () => {
 
     var tooltipbtn = document.getElementById("translateTooltipZh");
     tooltipbtn.textContent = "Перевод скопирован";
-  }
-
+  };
 
   function outFuncEng () { //наведение курсора на кнопку перевода
     var tooltipbtn = document.getElementById("translateTooltipEng");
     tooltipbtn.textContent = "Скопировать перевод";
-  }
+  };
 
   function outFuncRus () { //наведение курсора на кнопку перевода
     var tooltipbtn = document.getElementById("translateTooltipRus");
     tooltipbtn.textContent = "Скопировать перевод";
-  }
+  };
 
   function outFuncZh () { //наведение курсора на кнопку перевода
     var tooltipbtn = document.getElementById("translateTooltipZh");
     tooltipbtn.textContent = "Скопировать перевод";
-  }
+  };
   
   const allMyCode = async () => {
   
