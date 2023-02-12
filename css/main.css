@@ -2,14 +2,13 @@
 body {
     background: rgb(240, 240, 240);
     font-family: Rubik;
-    text-align: center;
 };
 
-h1 {
-    color: rgba(13, 4, 24, 0.945)
-};
+.indexdiv {
+    text-align: center;
+}
   
-table, th {
+.center {
     border: 1px solid black;
     border-spacing: 10px;
     gap: 10px;
