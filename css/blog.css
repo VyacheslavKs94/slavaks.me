@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap');
 
 html, body {
-  background: rgb(240, 240, 240);
+  background: rgb(255,255,255);
   font-family: Rubik;
 }
 
@@ -9,7 +9,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
   flex-direction: row;
   flex-wrap: wrap;
   margin: -10px;
@@ -19,7 +19,7 @@ html, body {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  max-height: 75vh; 
+  max-height: 80vh; 
   width: auto;
 }
 
@@ -33,7 +33,7 @@ html, body {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  height: 100vh;
+  height: auto;
 }
 
 .catcolumn1, .catcolumn2 {
@@ -43,8 +43,10 @@ html, body {
 }
 
 .catcolumn1 img, .catcolumn2 img {
-  max-height: 50vh;
+  max-height: 45vh;
   width: auto;
+  margin-top: 5px;
+  border: 2px solid rgb(82, 136, 172);
 }
 
 @media (max-width: 768px) {
@@ -110,8 +112,9 @@ html, body {
 }
 
 .country-container:hover .flag {
-  opacity: 0.3;
+  opacity: 0.4;
   transform: scale(0.9);
+  filter: blur(4px);
 }
 
 .country-container[data-country="Georgia"] .flag {
