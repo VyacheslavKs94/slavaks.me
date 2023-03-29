@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap');
+
+html, body {
+  background: rgb(240, 240, 240);
+  font-family: Rubik;
+}
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: -10px;
+}
+
+.country-name {
+  font-size: 28px;
+  line-height: 1.0;
+}
+
+.country-date {
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.country-link {
+  text-decoration: none;
+  color: black;
+}
+
+.country-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  padding: 20px;
+  border: 0px solid black;
+  width: 250px;
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease-out;
+  box-sizing: border-box; 
+}
+
+.country-container:hover {
+  transform: scale(1.1);
+}
+
+.flag {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("flag.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  opacity: 0.1;
+  transition: transform 0.2s ease-out, opacity 0.1s ease-out;
+}
+
+.country-container:hover .flag {
+  opacity: 0.3;
+  transform: scale(0.9);
+}
+
+.country-container[data-country="Georgia"] .flag {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Flag_of_Georgia.svg/1920px-Flag_of_Georgia.svg.png");
+}
+
+.country-container[data-country="Turkey"] .flag {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/1920px-Flag_of_Turkey.svg.png");
+}
+
+.country-container[data-country="Ukraine"] .flag {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/1920px-Flag_of_Ukraine.svg.png");
+}
+
+.country-container[data-country="Spain"] .flag {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Bandera_de_Espa%C3%B1a.svg/1920px-Bandera_de_Espa%C3%B1a.svg.png");
+}
+
+.country-container[data-country="Stpeters"] .flag {
+  background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Flag_of_Saint_Petersburg.svg/1920px-Flag_of_Saint_Petersburg.svg.png");
+}
+
+/* Add this new class to prevent clicking on the empty space between containers */
+.country-link:not(:last-child) {
+  margin-right: 20px;
+}
