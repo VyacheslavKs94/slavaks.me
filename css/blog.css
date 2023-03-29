@@ -15,10 +15,51 @@ html, body {
   margin: -10px;
 }
 
-.firstpicturk {
- display: flex;
- height: 110vh;
- align-items: center;
+.beacon {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 75vh; 
+  width: auto;
+}
+
+.single-image {
+  display: flex;
+  justify-content: center;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 100vh;
+}
+
+.catcolumn1, .catcolumn2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.catcolumn1 img, .catcolumn2 img {
+  max-height: 50vh;
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  .image-container {
+    flex-direction: column;
+  }
+
+  .catcolumn1, .catcolumn2, .single-image {
+    margin-bottom: 20px; 
+  }
+
+  .catcolumn1 img, .catcolumn2 img, .beacon {
+    max-height: 30vh; 
+    width: auto;
+  }
 }
 
 .country-name {
