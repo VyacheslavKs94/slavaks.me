@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Bebas Neue", sans-serif;
+    background-image: radial-gradient(circle, rgb(0, 0, 0), rgb(39, 36, 36), rgb(0, 0, 0));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    font-size: calc(1vw + 1vh);
+    overflow: hidden; /* Add this line */
+}
+
+.hidden {
+    display: none;
+}
+
+#main-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+#menu-title {
+    font-size: 6vmax;
+    color: white;
+    text-shadow: 0px 0px 10px black;
+    position: relative;
+    margin: 4rem 0 -2rem;
+  }
+  
+
+#nickname-selection {
+    border: 2px solid black;
+    padding: 1rem;
+    background-color: white;
+    text-align: center;
+    font-size: 2vmax;
+}
+
+#nickname-input {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 4rem;
+    padding-bottom: 1px;
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 400px;
+    text-align: center;
+    font-size: 2vmax;
+}
+
+#choose-nickname-button {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2rem;
+    padding: 10px 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    margin: 10px;
+    font-size: 2vmax;
+}
+
+#choose-nickname-button:hover {
+    background-color: #2080ce;
+}
+
+#main-menu-text {
+    color: white;
+    font-size: 3.5vmax;
+    text-align: center;
+    margin-top: 2vmax;
+  }
+
+#start-button, #start-button-tutorial, #debug-button {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2.5vmax;
+    padding: 1vmax 2vmax;
+    background-color: #fff;
+    border-radius: 20px;
+    border: 2px solid black;
+    cursor: pointer;
+    margin-top: 2vmax;
+    vertical-align: middle;
+}
+
+#start-button:hover, #start-button-tutorial:hover, #debug-button:hover {
+    background-color: #2080ce;
+    padding: 2vmax 4vmax;
+    color:antiquewhite;
+}
+
+#worldwide-emoji {
+    font-size: 2.5vmax;
+}
+
+#character-selection, #class-selection, #nickname-selection {
+    border: 2px solid black;
+    border-radius: 20px;
+    background-color: white;
+    text-align: center;
+    font-size: 2vmax;
+    height: 250px; /* add this line */
+    width: 550px;
+  }
+  
+  .characters, #classes {
+    display: flex;
+    justify-content: space-around;
+    margin: 1rem;
+    font-size: 2rem;
+  }
+  
+#characters button, #classes span {
+    font-size: 4vmax;
+    background-color: transparent;
+    border: 2px solid rgb(64, 43, 139);
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 10px;
+    margin: 10px;
+}
+
+#characters button:hover, #classes span:hover {
+    background-color: #0a304e;
+    color:antiquewhite;
+}
+
+#game {
+  border: 5px solid black;
+}
+
+canvas {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.1);
+    position: absolute; /* Add this line */
+    top: 0;             /* Add this line */
+    left: 0;            /* Add this line */
+}
