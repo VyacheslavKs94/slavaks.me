@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const keysPressed = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, w: false, a: false, s: false, d: false };
 
     let currentWave = 1;
-    const enemiesPerWave = [20];
+    const enemiesPerWave = [35];
 
     const logs = [];
     const cars = [];
@@ -264,6 +264,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
     let lastEnemyUpdate = 0;
     const currencies = [];
+    let enemiesReachedEnd = 0;
 
     function updateEnemy(enemies, gameCanvas) {
         const numberOfRoads = 14;
@@ -310,16 +311,42 @@ document.addEventListener("DOMContentLoaded", function () {
             if (enemy.speed === 0) {
                 setRandomEnemyMovementDelay(enemy);
             }
+            if (enemy.x < 0) {
+                enemy.x = 0;
+                enemy.speed = 0;
+                enemiesReachedEnd++;
+    
+                // Show "GAME OVER" pop-up when 5 enemies reached the end
+                if (enemiesReachedEnd === 5) {
+                    const gameOverPopup = document.createElement("div");
+                    gameOverPopup.style.position = "fixed";
+                    gameOverPopup.style.top = "50%";
+                    gameOverPopup.style.left = "50%";
+                    gameOverPopup.style.transform = "translate(-50%, -50%)";
+                    gameOverPopup.style.padding = "20px";
+                    gameOverPopup.style.backgroundColor = "red";
+                    gameOverPopup.style.border = "3px solid black";
+                    gameOverPopup.style.textAlign = "center";
+                    gameOverPopup.style.zIndex = "9999";
+                    gameOverPopup.innerHTML = "<h1>GAME OVER</h1>";
+                    document.body.appendChild(gameOverPopup);
+    
+                    // Close the pop-up with a single click
+                    gameOverPopup.addEventListener("click", () => {
+                        gameOverPopup.remove();
+                    });
+                }
+            }
         });
-    }          
+    }    
     
     function drawRoads(ctx, gameCanvas) {
         const numberOfRoads = 14;
         const roadSpacing = gameCanvas.height / (numberOfRoads + 1);
         const lineWidth = 2;
       
-        ctx.strokeStyle = 'white';
-        ctx.setLineDash([5, 15]);
+        ctx.strokeStyle = 'grey';
+        ctx.setLineDash([3, 15]);
         ctx.lineWidth = lineWidth;
 
         for (let i = 1; i <= numberOfRoads; i++) {
