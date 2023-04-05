@@ -3,7 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let chosenCharacter = "", chosenClass = null;
     const keysPressed = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, w: false, a: false, s: false, d: false };
 
+    let currentWave = 1;
+    const enemiesPerWave = [20];
+
     const logs = [];
+    const cars = [];
     const LOG_SIZE_MULTIPLIER = 4;
     const LOG_TOUCH_INTERVAL = 2000;
 
@@ -13,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
             Math.abs(log.y - enemy.y) < 40 &&
             log.x > enemy.x &&
             log.x < enemy.x + 40 * LOG_SIZE_MULTIPLIER
-        );
+        );   
       
         if (log && log.touchCooldown <= 0) {
           log.touches++;
@@ -29,9 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
         if (keysPressed.hasOwnProperty(event.key)) {
             keysPressed[event.key] = true;
         }
-        if (event.key.toLowerCase() === "e" && player.classEmoji === "🪓" && logs.length < 5) {
-            logs.push({ x: player.x + 40, y: player.y, touches: 0, size: 160 });
-          }          
+        if (event.key.toLowerCase() === "e") {
+            if (player.classEmoji === "🪓" && logs.length < 5) { // Add condition to check logs length
+                logs.push({ x: player.x + 40, y: player.y, touches: 0, size: 160 });
+            } else if (player.classEmoji === "🔧" && cars.length < 7) { // Add condition to check cars length
+                cars.push({ x: player.x + 40, y: player.y, size: 160 });
+            }
+        }              
     });    
     
     document.addEventListener("keyup", (event) => {
@@ -99,8 +107,16 @@ document.addEventListener("DOMContentLoaded", function () {
     function getRandomEnemy() {
         const enemyList = ['⊂(◉‿◉)つ', '╰(*°▽°*)╯'];
         const randomIndex = Math.floor(Math.random() * enemyList.length);
-        return { character: enemyList[randomIndex], scale: 1 / 1.5 };
+        return { character: enemyList[randomIndex], scale: 1 / 1.5, style: "text-shadow: 10px 10px red;" };
     }
+    
+    function setRandomEnemyMovementDelay(enemy) {
+        const delay = Math.random() * (5 - 0.5) + 0.5;
+        setTimeout(() => {
+            enemy.speed = 0.5;
+        }, delay * 1000);
+    }
+    
 
     function startGame(classOption) {
         document.getElementById("menu-title").classList.add("hidden");
@@ -122,12 +138,23 @@ document.addEventListener("DOMContentLoaded", function () {
           player.className = `${characterClasses[chosenCharacter]} ${player.className}`;
     
         setInterval(() => shootBullets(enemies), 1500);
-    
+
+        function shootBullets(enemies) {
+            if (player.classEmoji === "🔧" && keysPressed.e && logs.length < 7) {
+                const bullet = { x: player.x + 40, y: player.y, img: "https://slavaks.me/img/car.jpg" };
+                enemies.push(bullet);
+                logs.push({ x: player.x + 40, y: player.y, touches: 0, size: 160 });
+            }
+            enemies.forEach((enemy) => {
+                enemy.bullets.push({ x: enemy.x - 40, y: enemy.y - 20 });
+            });
+        }
+        
         const minX = gameCanvas.width * 0.99;
         const maxY = gameCanvas.height - 80;
         const maxX = gameCanvas.width * 0.95 - 40;
         
-        const numberOfEnemies = 20;
+        const numberOfEnemies = enemiesPerWave[currentWave - 1];
         const enemies = [];
 
         function setRandomEnemyMovementDelay(enemy) {
@@ -138,45 +165,47 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           
           for (let i = 0; i < numberOfEnemies; i++) {
-            const enemy = {
-              x: minX + Math.random() * (maxX - minX),
-              y: Math.random() * maxY * 0.8,
-              z: Math.random() * maxY,
-              speed: 0,
-              ...getRandomEnemy(),
-              bullets: [],
-              health: 3,
-              touchCooldown: 0,
-            };
-            setRandomEnemyMovementDelay(enemy);
+            let enemy;
+            let overlapped;
+            do {
+                overlapped = false;
+                enemy = {
+                    x: minX + Math.random() * (maxX - minX),
+                    y: Math.random() * maxY * 0.8,
+                    z: Math.random() * maxY,
+                    speed: 0,
+                    ...getRandomEnemy(),
+                    bullets: [],
+                    health: 3,
+                    touchCooldown: 0,
+                };
+                setRandomEnemyMovementDelay(enemy);
+                for (const existingEnemy of enemies) {
+                    const distance = Math.sqrt((enemy.x - existingEnemy.x) ** 2 + (enemy.y - existingEnemy.y) ** 2);
+                    if (distance < 40) {
+                        overlapped = true;
+                        break;
+                    }
+                }
+            } while (overlapped);
             enemies.push(enemy);
-          }
-          
-
-        function shootBullets(enemies) {
-            enemies.forEach((enemy) => {
-                enemy.bullets.push({ x: enemy.x - 40, y: enemy.y - 20 });
-            });
-        }
+        }        
     
     draw(enemies);
     }
    
     document.addEventListener("keydown", (event) => {
-        const key = event.key.toLowerCase();
-        if (!keysPressed.hasOwnProperty(key)) {
-          keysPressed[key] = true;
-        }
-        if (key === "e" && player.className === "Lumberjack") {
-          logs.push({ x: player.x + 40, y: player.y, touches: 0, size: 160 });
-        }
-      });
-      
-      document.addEventListener("keyup", (event) => {
         if (keysPressed.hasOwnProperty(event.key)) {
-          keysPressed[event.key] = false;
+            keysPressed[event.key] = true;
         }
-      });
+        if (event.key.toLowerCase() === "e") {
+            if (player.classEmoji === "🪓" && logs.length < 5) {
+                logs.push({ x: player.x + 40, y: player.y, touches: 0, size: 160 });
+            } else if (player.classEmoji === "🔧" && cars.length < 7) {
+                cars.push({ x: player.x + 40, y: player.y, size: 160 });
+            }
+        }        
+    });    
 
     const player = {
         x: window.innerWidth * 0.25,
@@ -254,7 +283,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     enemy.touchCooldown -= 1/30;
                 }
             } else {
-                enemy.x -= enemy.speed;
+                const newX = enemy.x - enemy.speed;
+                let canMove = true;
+    
+                enemies.forEach((otherEnemy) => {
+                    if (otherEnemy !== enemy) {
+                        const distance = Math.sqrt((newX - otherEnemy.x) ** 2 + (enemy.y - otherEnemy.y) ** 2);
+                        if (distance < 40) {
+                            canMove = false;
+                            return;
+                        }
+                    }
+                });
+    
+                if (canMove) {
+                    enemy.x = newX;
+                }
             }
     
             if (Math.random() < 0.05) { 
@@ -262,17 +306,41 @@ document.addEventListener("DOMContentLoaded", function () {
                 const nextRoad = Math.max(1, Math.min(numberOfRoads, currentRoad + Math.round(Math.random() * 2) - 1));
                 enemy.y = roadSpacing * nextRoad;
             }
+    
+            if (enemy.speed === 0) {
+                setRandomEnemyMovementDelay(enemy);
+            }
         });
-    }    
+    }          
     
     function drawRoads(ctx, gameCanvas) {
         const numberOfRoads = 14;
         const roadSpacing = gameCanvas.height / (numberOfRoads + 1);
-        const lineWidth = 9;
+        const lineWidth = 2;
       
         ctx.strokeStyle = 'white';
         ctx.setLineDash([5, 15]);
         ctx.lineWidth = lineWidth;
+
+        for (let i = 1; i <= numberOfRoads; i++) {
+            const yPos = roadSpacing * i;
+    
+            // Draw solid lines
+            ctx.beginPath();
+            ctx.moveTo(gameCanvas.width * 0.1, yPos - 5);
+            ctx.lineTo(gameCanvas.width * 0.85, yPos - 5);
+            ctx.stroke();
+    
+            ctx.beginPath();
+            ctx.moveTo(gameCanvas.width * 0.1, yPos + 5);
+            ctx.lineTo(gameCanvas.width * 0.85, yPos + 5);
+            ctx.stroke();
+    
+            // Draw road markings
+            ctx.fillStyle = 'yellow';
+            ctx.fillRect(gameCanvas.width * 0.1 + 20, yPos - 2, 40, 4);
+            ctx.fillRect(gameCanvas.width * 0.85 - 60, yPos - 2, 40, 4);
+        }
       
         Array(numberOfRoads).fill().forEach((_, i) => {
           const yPos = roadSpacing * (i + 1);
@@ -289,6 +357,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         ctx.setLineDash([]);
       }
+
+      
+      function handleCarCollidesWithEnemy(car, enemies) {
+        for (let i = 0; i < enemies.length; i++) {
+            const enemy = enemies[i];
+            if (Math.abs(car.y - enemy.y) < 40 && car.x > enemy.x && car.x < enemy.x + 40) {
+                enemies.splice(i, 1);
+                return true;
+            }
+        }
+        return false;
+    }     
     
     function draw(enemies) {
 
@@ -323,14 +403,22 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       
         enemies.forEach((enemy) => {
+                ctx.save(); // Save the current context state
+                ctx.shadowColor = "red"; // Set shadow color to red
+                ctx.fillStyle = "black";
+                ctx.shadowBlur = 8; // Set shadow blur
+                ctx.shadowOffsetX = 0; // Set shadow X offset
+                ctx.shadowOffsetY = 0; // Set shadow Y offset
+                ctx.font = `40px monospace`;
+                ctx.fillText(enemy.character, enemy.x, enemy.y);
+                ctx.restore(); // Restore the context state to what it was before applying the shadow
           handleEnemyTouchesLogs(enemy);
         });
     
         enemies.forEach((enemy, index) => {
         
-            const bulletImage = new Image();
-            bulletImage.src = "https://slavaks.me/img/pew.png";
-
+        const bulletImage = new Image();
+        bulletImage.src = "https://slavaks.me/img/pew.png";
         ctx.font = `calc(40px * ${enemy.scale}) 'Bebas Neue'`;
         ctx.fillStyle = "white"; 
         ctx.fillText(enemy.character, enemy.x, enemy.y);
@@ -381,6 +469,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return enemies.length === 0;
     }    
 
+
+
     if (allEliminated) {
         ctx.font = "40px 'Bebas Neue'";
         currencies.forEach((currency, index) => {
@@ -392,6 +482,17 @@ document.addEventListener("DOMContentLoaded", function () {
             ctx.fillText(currency.symbol, currency.x, currency.y);
         });
     }
+// Draw cars and handle collisions
+ctx.fillStyle = "black";
+cars.forEach((car, index) => {
+    const carImage = new Image();
+    carImage.src = "https://slavaks.me/img/car.jpg";
+    ctx.drawImage(carImage, car.x, car.y, 40, 40);
+    car.x += 5;
+    if (handleCarCollidesWithEnemy(car, enemies)) {
+        cars.splice(index, 1);
+    }
+});
 
         function drawTextWithRotation(text, x, y, angle) {
             ctx.save();
