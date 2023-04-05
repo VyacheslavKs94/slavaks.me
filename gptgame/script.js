@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function getRandomEnemy() {
-        const enemyList = ['⊂(◉‿◉)つ', '╰(*°▽°*)╯'];
+        const enemyList = ['⊂(◉‿◉)つ', '╰(*°▽°*)╯', '(ㆆ _ ㆆ)', '•_•', '(⌒▽⌒)', 'ԅ(≖‿≖ԅ)', 'ƪ(ړײ)ƪ', '(｡◕‿‿◕｡)', '(◕ᴥ◕ʋ)', '◕_◕', '(•ᴥ• )́́⻍', '(=^･ｪ･^=))ﾉ彡☆', '(ツ)', '⊙ω⊙',];
         const randomIndex = Math.floor(Math.random() * enemyList.length);
         return { character: enemyList[randomIndex], scale: 1 / 1.5, style: "text-shadow: 10px 10px red;" };
     }
