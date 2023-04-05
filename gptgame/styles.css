@@ -79,6 +79,10 @@ body {
     background-color: #2080ce;
 }
 
+.enemy-red-shadow {
+    filter: drop-shadow(0px 0px 5px red);
+    }
+    
 #main-menu-text {
     color: white;
     font-size: 3.5vmax;
