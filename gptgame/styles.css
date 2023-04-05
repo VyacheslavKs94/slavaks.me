@@ -28,16 +28,21 @@ body {
     justify-content: center;
     height: 100vh;
     width: 100vw;
-}
+  }
 
-#menu-title {
+  #menu-title {
     font-size: 6vmax;
     color: white;
-    text-shadow: 0px 0px 10px black;
-    position: relative;
-    margin: 4rem 0 -2rem;
-  }
-  
+    text-shadow: 0px 0px 10px rgb(104, 20, 20);
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 10vh;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 
 #nickname-selection {
     border: 2px solid black;
@@ -81,7 +86,7 @@ body {
     margin-top: 2vmax;
   }
 
-#start-button, #start-button-tutorial, #debug-button {
+#start-button, #start-button-tutorial, #debug-button, #nextWaveButton {
     font-family: "Bebas Neue", sans-serif;
     font-size: 2.5vmax;
     padding: 1vmax 2vmax;
@@ -95,8 +100,7 @@ body {
 
 #start-button:hover, #start-button-tutorial:hover, #debug-button:hover {
     background-color: #2080ce;
-    padding: 2vmax 4vmax;
-    color:antiquewhite;
+    color: antiquewhite;
 }
 
 #worldwide-emoji {
@@ -109,9 +113,13 @@ body {
     background-color: white;
     text-align: center;
     font-size: 2vmax;
-    height: 250px; /* add this line */
+    height: 250px;
     width: 550px;
-  }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
   
   .characters, #classes {
     display: flex;

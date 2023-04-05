@@ -19,15 +19,18 @@
             <h2>Choose your class</h2>
             <div id="classes"></div>
         </div>
-        <!-- Nickname selection -->
+        <!--<button id="next-wave-button">Next wave</button>-->
         <div id="nickname-selection" class="hidden">
             <p>Enter your nickname</p>
             <input type="text" id="nickname-input" maxlength="12" />
             <button id="choose-nickname-button">I'M READY!</button>
         </div>
         <canvas id="game" class="hidden"></canvas>
-    </div>    
-    <canvas id="game" class="hidden"></canvas>
+    </div>
+    <button id="next-wave" disabled>NEXT WAVE</button>
+    <canvas id="game" class="hidden"><button id="next-wave">NEXT WAVE</button>
+    </canvas>
+    <canvas id="hp-canvas"></canvas>
     <a id="worldwide-emoji" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">🌐</a>
     <script src="script.js"></script>
 </body>

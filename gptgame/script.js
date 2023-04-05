@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (keysPressed.hasOwnProperty(event.key)) {
             keysPressed[event.key] = true;
         }
-        if (event.key.toLowerCase() === "e" && player.classEmoji === "🪓") {
+        if (event.key.toLowerCase() === "e" && player.classEmoji === "🪓" && logs.length < 5) {
             logs.push({ x: player.x + 40, y: player.y, touches: 0, size: 160 });
-        }        
+          }          
     });    
     
     document.addEventListener("keyup", (event) => {
@@ -39,12 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
             keysPressed[event.key] = false;
         }
     });
-
-const startWithoutTutorialButton = document.getElementById("start-button");
-
-startWithoutTutorialButton.addEventListener("click", () => {
-  startWithTutorialButton.classList.add("hidden");
-});
     
     const addEventListenerToElem = (elem, eventType, listener) => elem.addEventListener(eventType, listener);
 
@@ -61,13 +55,13 @@ startWithoutTutorialButton.addEventListener("click", () => {
         container.appendChild(element);
     });
 
-    makeButtonsFromList(ch, ["🥷", "🦊"], (character) => {
+    makeButtonsFromList(ch, ["🧟", "😼"], (character) => {
         cs.classList.add("hidden");
         clS.classList.remove("hidden");
         chosenCharacter = character;
     });
 
-    const classOptions = [{ emoji: "🪓", name: "Lumberjack" }, { emoji: "💣", name: "Demoman" }];
+    const classOptions = [{ emoji: "🪓", name: "Lumberjack" }, { emoji: "🔧", name: "Mechanic" }];
 
     classOptions.forEach((classOption) => {
         const classElement = document.createElement("span");
@@ -78,16 +72,16 @@ startWithoutTutorialButton.addEventListener("click", () => {
             chosenClass = classOptions.find(option => option.emoji === event.target.textContent);
         });
         cl.appendChild(classElement);
-    });    
+    });
     
     addEventListenerToElem(cnb, "click", () => {
         const len = ni.value.length;
-        if (len >= 3 && len <= 12) {
+        if (len >= 3 && len <= 15) {
             player.nickname = ni.value;
             ns.classList.add("hidden");
             startGame(chosenClass);
         } else {
-            alert(`Nickname should not be ${len < 3 ? "shorter" : "longer"} than ${len < 3 ? "3" : "12"} ch.`);
+           alert(`Nickname should not be ${len < 3 ? "shorter" : "longer"} than 3 or 15 ch.`);
         }
     });      
 
@@ -100,6 +94,12 @@ startWithoutTutorialButton.addEventListener("click", () => {
                 }
             });
         });
+    }
+
+    function getRandomEnemy() {
+        const enemyList = ['⊂(◉‿◉)つ', '╰(*°▽°*)╯'];
+        const randomIndex = Math.floor(Math.random() * enemyList.length);
+        return { character: enemyList[randomIndex], scale: 1 / 1.5 };
     }
 
     function startGame(classOption) {
@@ -115,19 +115,14 @@ startWithoutTutorialButton.addEventListener("click", () => {
         player.classEmoji = classOption.emoji;
 
         const characterClasses = {
-            "🥷": "Ninja",
-            "🦊": "Fox"
+            "🧟": "Zombie",
+            "😼": "Cat"
           };
           
-          player.className = `${characterClasses[chosenCharacter]} ${player.className}`;          
+          player.className = `${characterClasses[chosenCharacter]} ${player.className}`;
     
         setInterval(() => shootBullets(enemies), 1500);
     
-        function getRandomEnemy() {
-            const enemyList = ['⊂(◉‿◉)つ', '╰(*°▽°*)╯'];
-            const randomIndex = Math.floor(Math.random() * enemyList.length);
-            return { character: enemyList[randomIndex], scale: 1 / 1.5 };
-        }        
         const minX = gameCanvas.width * 0.99;
         const maxY = gameCanvas.height - 80;
         const maxX = gameCanvas.width * 0.95 - 40;
@@ -162,9 +157,9 @@ startWithoutTutorialButton.addEventListener("click", () => {
             enemies.forEach((enemy) => {
                 enemy.bullets.push({ x: enemy.x - 40, y: enemy.y - 20 });
             });
-        }        
+        }
     
-        draw(enemies);
+    draw(enemies);
     }
    
     document.addEventListener("keydown", (event) => {
@@ -181,15 +176,16 @@ startWithoutTutorialButton.addEventListener("click", () => {
         if (keysPressed.hasOwnProperty(event.key)) {
           keysPressed[event.key] = false;
         }
-      });      
+      });
 
     const player = {
-        x: window.innerWidth * 0.15,
+        x: window.innerWidth * 0.25,
         y: window.innerHeight * 0.4,
         speed: 3,
         character: "",
         className: "",
         classEmoji: "",
+        dinero: 0,
     };
 
     function updatePlayerPosition() {
@@ -197,36 +193,43 @@ startWithoutTutorialButton.addEventListener("click", () => {
     
         const numberOfRoads = 14;
         const roadSpacing = gameCanvas.height / (numberOfRoads + 1);
+        const roadHeight = roadSpacing / 2;
+        const minY = roadHeight;
+        const maxY = gameCanvas.height - roadHeight;
+    
         const closestRoad = Math.round(player.y / roadSpacing);
         const closestRoadY = roadSpacing * closestRoad;
     
         if (keysPressed.ArrowUp || keysPressed.w) {
             if (!keysPressed.moveUp) {
                 keysPressed.moveUp = true;
-                player.y = Math.max(closestRoadY - roadSpacing, player.y - roadSpacing);
+                player.y = Math.max(minY, closestRoadY - roadSpacing);
             }
         } else {
             keysPressed.moveUp = false;
         }
+    
         if (keysPressed.ArrowDown || keysPressed.s) {
             if (!keysPressed.moveDown) {
                 keysPressed.moveDown = true;
-                player.y = Math.min(closestRoadY + roadSpacing, player.y + roadSpacing);
+                player.y = Math.min(maxY, closestRoadY + roadSpacing);
             }
         } else {
             keysPressed.moveDown = false;
         }
+    
         if (keysPressed.ArrowLeft || keysPressed.a) {
             player.x = Math.max(gameCanvas.width * 0.1 + 20, player.x - player.speed);
         }
+    
         if (keysPressed.ArrowRight || keysPressed.d) {
             player.x = Math.min(gameCanvas.width * 0.8 - 40, player.x + player.speed);
         }
     
-        if (player.y < 0) {
-            player.y = 0;
-        } else if (player.y > gameCanvas.height) {
-            player.y = gameCanvas.height;
+        if (player.y < minY) {
+            player.y = minY;
+        } else if (player.y > maxY) {
+            player.y = maxY;
         }
     }
         
@@ -265,35 +268,44 @@ startWithoutTutorialButton.addEventListener("click", () => {
     function drawRoads(ctx, gameCanvas) {
         const numberOfRoads = 14;
         const roadSpacing = gameCanvas.height / (numberOfRoads + 1);
-    
-        ctx.setLineDash([5, 15]);
-        ctx.lineWidth = 9;
+        const lineWidth = 9;
+      
         ctx.strokeStyle = 'white';
+        ctx.setLineDash([5, 15]);
+        ctx.lineWidth = lineWidth;
+      
+        Array(numberOfRoads).fill().forEach((_, i) => {
+          const yPos = roadSpacing * (i + 1);
+          ctx.beginPath();
+          ctx.moveTo(gameCanvas.width * 0.1, yPos);
+          ctx.lineTo(gameCanvas.width * 0.85, yPos);
+          ctx.stroke();
+      
+          ctx.font = "40px 'Bebas Neue'";
+          ctx.fillStyle = "green";
+          ctx.fillText("🌲", gameCanvas.width * 0.1, yPos);
+      
+          ctx.fillText("🌳", gameCanvas.width * 0.75 + 71, yPos);
+        });
+        ctx.setLineDash([]);
+      }
     
-        for (let i = 1; i <= numberOfRoads; i++) {
-            const yPos = roadSpacing * i;
-            ctx.beginPath();
-            ctx.moveTo(gameCanvas.width * 0.1, yPos);
-            ctx.lineTo(gameCanvas.width * 0.85, yPos);
-            ctx.stroke();
-        }
-        ctx.setLineDash([]); 
-    }           
-
     function draw(enemies) {
+
+        function emojiNumber(number) {
+            return number.toString().split('').map(digit => {
+                if (digit === '-') {
+                    return '➖';
+                }
+                return String.fromCharCode('0️⃣'.charCodeAt(0) + parseInt(digit));
+            }).join('');
+        }
         const gameCanvas = document.getElementById("game");
         const ctx = gameCanvas.getContext("2d");
         
         ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
 
         drawRoads(ctx, gameCanvas);
-    
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.moveTo(gameCanvas.width * 0.85, 0);
-        ctx.lineTo(gameCanvas.width * 0.85, gameCanvas.height);
-        ctx.stroke();
 
         updatePlayerPosition();
         updateEnemy(enemies, gameCanvas);
@@ -317,20 +329,20 @@ startWithoutTutorialButton.addEventListener("click", () => {
         enemies.forEach((enemy, index) => {
         
             const bulletImage = new Image();
-bulletImage.src = "https://slavaks.me/img/pew.png";
+            bulletImage.src = "https://slavaks.me/img/pew.png";
 
-ctx.font = `calc(40px * ${enemy.scale}) 'Bebas Neue'`;
-ctx.fillStyle = "white"; 
-ctx.fillText(enemy.character, enemy.x, enemy.y);
-enemy.bullets.forEach((bullet) => {
-    ctx.drawImage(bulletImage, bullet.x, bullet.y, 30, 30);
-});
+        ctx.font = `calc(40px * ${enemy.scale}) 'Bebas Neue'`;
+        ctx.fillStyle = "white"; 
+        ctx.fillText(enemy.character, enemy.x, enemy.y);
+        enemy.bullets.forEach((bullet) => {
+        ctx.drawImage(bulletImage, bullet.x, bullet.y, 30, 30);
+        });
 
             const distance = Math.sqrt(Math.pow(enemy.x - player.x, 2) + Math.pow(enemy.y - player.y, 2));
             if (distance < 40) {
                 if (enemy.health > 1) {
                     enemy.health -= 1;
-                    ctx.font = "40px 'Bebas Neue'";
+                    ctx.font = "45px 'Bebas Neue'";
                     ctx.fillStyle = "red";
                     ctx.fillText("💢", enemy.x + 20, enemy.y - 20);
                     setTimeout(() => {
@@ -364,49 +376,48 @@ enemy.bullets.forEach((bullet) => {
         }
         }
       });
+      const allEliminated = allEnemiesEliminated(enemies);
+      function allEnemiesEliminated(enemies) {
+        return enemies.length === 0;
+    }    
 
-      ctx.font = "40px 'Bebas Neue'";
-    currencies.forEach((currency) => {
-        ctx.fillText(currency.symbol, currency.x, currency.y);
-    });
+    if (allEliminated) {
+        ctx.font = "40px 'Bebas Neue'";
+        currencies.forEach((currency, index) => {
+            const distance = Math.sqrt(Math.pow(currency.x - player.x, 2) + Math.pow(currency.y - player.y, 2));
+            if (distance < 40) {
+                player.dinero++;
+                currencies.splice(index, 1);
+            }
+            ctx.fillText(currency.symbol, currency.x, currency.y);
+        });
+    }
+
+        function drawTextWithRotation(text, x, y, angle) {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.textAlign = "center";
+            ctx.font = "90px 'Bebas Neue'";
+            ctx.fillStyle = "white";
+            ctx.fillText(text, 0, 0);
+            ctx.restore();
+        }
         
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        ctx.moveTo(gameCanvas.width * 0.1, 0);
-        ctx.lineTo(gameCanvas.width * 0.1, gameCanvas.height);
-        ctx.stroke();
-    
-        ctx.save();
-        ctx.translate(gameCanvas.width * 0.09, gameCanvas.height / 2);
-        ctx.rotate(-Math.PI / 2);
-        ctx.textAlign = "center";
-        ctx.font = "90px 'Bebas Neue'";
-        ctx.fillStyle = "white";
-        ctx.fillText(`🏠 ${player.nickname} Base 🏠`, 0, 0);
-        ctx.restore();
-
-        ctx.save();
-        ctx.translate(gameCanvas.width - 25, gameCanvas.height / 2);
-        ctx.rotate(-Math.PI / 2);
-        ctx.textAlign = "center";
-        ctx.font = "90px 'Bebas Neue'";
-        ctx.fillStyle = "white";
-        ctx.fillText(`🛖${player.nickname.split('').reverse().join('')} spawn🛖`, 0, 0);
-        ctx.restore();
+        drawTextWithRotation(`🏠 ${player.nickname} Base 🏠`, gameCanvas.width * 0.09, gameCanvas.height / 2, -Math.PI / 2);
+        drawTextWithRotation(`🛖${player.nickname.split('').reverse().join('')} spawn🛖`, gameCanvas.width - 25, gameCanvas.height / 2, -Math.PI / 2);        
 
         const currentTime = new Date().getTime();
     if (currentTime - lastEnemyUpdate > 1000) {
         lastEnemyUpdate = currentTime;
     }
 
-        updateBullets(enemies); 
-
-        ctx.font = "70px 'Bebas Neue'";
+        updateBullets(enemies);
+        ctx.font = "30px 'Bebas Neue'";
         ctx.fillStyle = "white";
         ctx.textAlign = "center";
-        ctx.fillText(`You are: ${player.classEmoji} - ${player.className}`, gameCanvas.width / 2, gameCanvas.height - 30);
-
+        ctx.fillText(`You are: ${player.classEmoji} - ${player.className} | Dinero 💰 - ${emojiNumber(player.dinero)}`, gameCanvas.width / 2, gameCanvas.height - 30);
+        
         requestAnimationFrame(() => draw(enemies));
     }
 });
