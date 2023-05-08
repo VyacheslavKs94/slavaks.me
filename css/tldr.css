@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap');
+body {
+    background: rgb(240, 240, 240);
+    font-family: Rubik;
+    margin: 0; /* Remove default margin */
+  }
+  
+  #header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 800px; /* adjust this value to your preference */
+    margin: 0 auto; /* center the container horizontally */
+    padding: 20px;
+  }
+  
+  #menu-title {
+    margin-top: 0;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .search {
+    flex-grow: 1;
+    margin-right: 5px;
+  }
+  
+  .submit {
+    width: 100px;
+  }
+  
+  #review-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 800px; /* adjust this value to your preference */
+    margin: 20px auto; /* center the review boxes horizontally */
+  }
+  
+  .review {
+    width: calc(33.33% - 20px);
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+    box-sizing: border-box;
+  }
+  
+  input[type=range] {
+    width: 200px; /* set width of slider */
+    height: 10px; /* set height of slider */
+    background-color: #ddd; /* set background color */
+    border-radius: 5px; /* round corners */
+    outline: none; /* remove outline when active */
+    cursor: pointer; /* change cursor on hover */
+  }
+  
+  input[type=range]::-webkit-slider-thumb {
+    width: 20px; /* set width of slider handle */
+    height: 20px; /* set height of slider handle */
+    background-color: #333; /* set color of slider handle */
+    border-radius: 50%; /* make slider handle circular */
+    cursor: pointer; /* change cursor on hover */
+  }
+  

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TLDR</title>
+    <link rel="stylesheet" href="/css/tldr.css"/>
+</head>
+<body>
+    <div id="main-menu">
+        <div id="header-container"></div>
+        <h1 id="menu-title">TLDR: <span id="game-name"></span></h1>
+        <form> 
+          <input type="text" name="text" class="search" placeholder="Enter game name or ID">
+          <input type="range" id="day-range-slider" min="0" max="9999" value="0">
+          <input type="submit" name="submit" class="submit" value="Search">
+        </form>
+    </div>
+        <div id="review-list"></div>
+      </div>
+      
+      <template id="review-template">
+        <div class="review">
+          <div class="review-header">
+            <span class="review-author"></span>
+            <span class="review-date"></span>
+          </div>
+          <div class="review-text"></div>
+          <div class="review-votes">
+            <div class="review-players"></div>
+            <div class="review-helpful"></div>
+            <div class="review-score"></div>
+          </div>
+        </div>
+      </template>
+      
+
+    <script src="/tldr/tldr.js"></script>
+</body>
+</html>
