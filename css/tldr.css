@@ -50,20 +50,26 @@ body {
     box-sizing: border-box;
   }
   
-  input[type=range] {
-    width: 200px; /* set width of slider */
-    height: 10px; /* set height of slider */
-    background-color: #ddd; /* set background color */
-    border-radius: 5px; /* round corners */
-    outline: none; /* remove outline when active */
-    cursor: pointer; /* change cursor on hover */
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: 2px solid #333;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
   }
   
-  input[type=range]::-webkit-slider-thumb {
-    width: 20px; /* set width of slider handle */
-    height: 20px; /* set height of slider handle */
-    background-color: #333; /* set color of slider handle */
-    border-radius: 50%; /* make slider handle circular */
-    cursor: pointer; /* change cursor on hover */
+  input[type="range"]::-webkit-slider-thumb:hover::before {
+    content: attr(title);
+    position: absolute;
+    top: -30px;
+    left: -10px;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
   }
   

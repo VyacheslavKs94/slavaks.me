@@ -4,6 +4,7 @@ const reviewList = document.querySelector('#review-list');
 const gamename = document.querySelector('#game-name');
 const slider = document.querySelector('input[type="range"]');
 
+
 const reviewTemplate = document.querySelector('#review-template').content;
 
 form.addEventListener('submit', async event => {
@@ -38,11 +39,11 @@ form.addEventListener('submit', async event => {
 });
 
 slider.addEventListener('input', () => {
-  const sliderValue = slider.value;
-  const sliderOutput = document.querySelector('.slider-output');
-  sliderOutput.textContent = sliderValue;
-});
-
+    const sliderValue = slider.value;
+    const sliderOutput = document.querySelector('.slider-output');
+    sliderOutput.textContent = sliderValue;
+  });
+  
 function getRandomElements(array, numElements) {
   const shuffled = array.sort(() => 0.5 - Math.random());
   return shuffled.slice(0, numElements);

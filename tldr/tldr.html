@@ -8,13 +8,17 @@
 </head>
 <body>
     <div id="main-menu">
+        <!-- Add this button to your HTML -->
+<button id="steam-login">Login with Steam</button>
         <div id="header-container"></div>
         <h1 id="menu-title">TLDR: <span id="game-name"></span></h1>
         <form> 
-          <input type="text" name="text" class="search" placeholder="Enter game name or ID">
-          <input type="range" id="day-range-slider" min="0" max="9999" value="0">
-          <input type="submit" name="submit" class="submit" value="Search">
-        </form>
+     <input type="text" name="text" class="search" placeholder="Enter game name or ID">
+     Day Range: <input type="range" id="day-range-slider" min="1" max="2600" value="0">
+     <div class="slider-output"></div> 
+     <input type="submit" name="submit" class="submit" value="Search">     
+</form>
+
     </div>
         <div id="review-list"></div>
       </div>
