@@ -136,4 +136,25 @@ const getFile = async () => {
     };
   };
   
+  function convertDate() {
+    var dateInput = document.getElementById('dateInput').value; 
+    var dateParts = dateInput.split(" ")[0].split("/"); 
+    var timeParts = dateInput.split(" ")[1].split(":"); 
+
+    var dateObject = new Date(Date.UTC(2023, dateParts[1] - 1, dateParts[0], timeParts[0], timeParts[1]));
+
+    var optionsEN = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
+    var dateStringEN = new Intl.DateTimeFormat('en-GB', optionsEN).format(dateObject);
+    dateStringEN = dateStringEN.replace("GMT", "UTC"); 
+
+    var optionsRU = { month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
+    var dateStringRU = new Intl.DateTimeFormat('ru-RU', optionsRU).format(dateObject);
+    dateStringRU = dateStringRU.replace("GMT", "МСК");
+
+    var dateStringZH = dateStringEN;
+
+    document.getElementById('dateResult').innerHTML = "English: " + dateStringEN + "<br/>Russian: " + dateStringRU + "<br/>Chinese: " + dateStringZH;
+}
+
   allMyCode();
+  
