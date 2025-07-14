@@ -3,4 +3,68 @@
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
-};
+}
+
+.linkedin-btn, .gptgame-btn, .about-btn {
+    position: relative;
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 74px;
+    font-weight: bold;
+    color: #ffffffd7;
+    background: transparent; /* убираем фон отсюда */
+    border: 4px solid transparent;
+    border-radius: 24px;
+    padding: 24px 64px;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    z-index: 0;
+    overflow: hidden;
+    width: 400px; /* или подберите нужное значение */
+    text-align: center;
+}
+
+.linkedin-btn::before, .gptgame-btn::before, .about-btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 224px;
+    padding: 5px; /* matches border width */
+    background: linear-gradient(90deg, #dd24774f, #eeea154f, #dd24764f);
+    background-size: 1600% 1600%;
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: -2;
+    animation: none;
+    transition: background-position 0.1s linear;
+}
+
+.linkedin-btn:hover::before, .linkedin-btn:focus::before,
+.gptgame-btn:hover::before, .gptgame-btn:focus::before,
+.about-btn:hover::before, .about-btn:focus::before {
+    animation: linkedin-gradient-rotate 3s linear infinite;
+}
+
+@keyframes linkedin-gradient-rotate {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.linkedin-btn::after, .gptgame-btn::after, .about-btn::after {
+    content: "";
+    position: absolute;
+    inset: 224px; /* совпадает с padding у ::before */
+    border-radius: 19px; /* 24px - 5px */
+    backdrop-filter: blur(3px);
+    background: #2122071a; /* ваш прежний фон */
+    z-index: -1;
+    pointer-events: none;
+}

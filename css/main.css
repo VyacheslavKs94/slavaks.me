@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap');
 body {
-    background: rgb(240, 240, 240);
-    font-family: Rubik;
-};
-
+    background: radial-gradient(at top left, #083b3d, transparent 20%),
+                radial-gradient(at bottom right, #ff512f, transparent 20%),
+                radial-gradient(at bottom left, #dd2476, transparent 20%),
+                radial-gradient(at top right, #eeea15, transparent 20%);
+    background-color: #000;
+    background-blend-mode: screen;
+  }
+  
+  
 .indexdiv {
     text-align: center;
 }
