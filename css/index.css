@@ -3,4 +3,37 @@
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
-};
+}
+
+.linkedin-btn {
+    display: inline-block;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 75px;
+    font-weight: bold;
+    color: #ffffffd7;
+    background: linear-gradient(90deg, #0077b5, #0382a8, #04aab9, #049265, #ac9b09, #bb8506, #be5205, #c23104, #ca352b, #ff3c00, #ff6a00, #ffb300, #a7970a, #12b380, #04aab9, #0382a8, #0077b5);
+    background-size: 1600% 1600%;
+    border-radius: 24px;
+    padding: 24px 64px;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border: none;
+    transition: box-shadow 0.2s;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.linkedin-btn:hover, .linkedin-btn:focus {
+    animation: linkedin-gradient-rotate 8s linear infinite;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.16);
+}
+
+@keyframes linkedin-gradient-rotate {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
