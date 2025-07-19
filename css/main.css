@@ -1,27 +1,387 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap');
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "San Francisco", Helvetica, Arial, sans-serif;
+}
 body {
-    background: radial-gradient(at top left, #083b3d, transparent 20%),
-                radial-gradient(at bottom right, #ff512f, transparent 20%),
-                radial-gradient(at bottom left, #dd2476, transparent 20%),
-                radial-gradient(at top right, #eeea15, transparent 20%);
-    background-color: #000;
-    background-blend-mode: screen;
+  min-height: 100vh;
+  background: #0a1833;
+  color: #fff;
+  font-family: inherit;
+  overflow-x: hidden;
+}
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100vw;
+  pointer-events: none;
+  z-index: 2;
+}
+.main-title {
+  font-size: 72px;
+  font-family: inherit;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 0;
+  transition: transform 0.7s cubic-bezier(.77,0,.18,1), opacity 0.7s cubic-bezier(.77,0,.18,1);
+}
+/* --- HI SECTION --- */
+.section.hi {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+}
+.hi-title {
+  font-size: clamp(64px, 16vw, 120px);
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-align: center;
+  color: #fff;
+  font-family: inherit;
+  margin-bottom: 0;
+  margin-top: 0;
+  text-transform: uppercase;
+  transition: opacity 0.7s, transform 0.7s;
+}
+
+/* --- WHO AM I SECTION --- */
+.section.who {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s, transform 0.7s;
+}
+.section.who.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+.who-title {
+  font-size: clamp(40px, 12vw, 100px);
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-top: 80px;
+  margin-bottom: 32px;
+  text-align: center;
+  font-family: inherit;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+.section.who.visible .who-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+.who-desc-block {
+  position: relative;
+  width: 100vw;
+  max-width: 900px;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.who-desc-text {
+  font-size: clamp(20px, 3vw, 40px);
+  color: #fff;
+  font-family: inherit;
+  text-align: center;
+  z-index: 2;
+  position: relative;
+  margin: 0 auto;
+  padding: 32px 24px 32px 24px;
+  font-weight: 500;
+  background: rgba(10,24,51,0.7);
+  border-radius: 18px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+}
+.omnom-bg {
+  position: absolute;
+  left: 30%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 700px;
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 1s;
+  border-radius: 12px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+.section.who.visible .omnom-bg {
+  opacity: 0.2;
+}
+.be-bg {
+  position: absolute;
+  left: 80%;
+  top: calc(70% + 40px);
+  transform: translate(-50%, -50%);
+  width: 60%;
+  max-width: 400px;
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 1s;
+  border-radius: 12px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+.section.who.visible .be-bg {
+  opacity: 0.2;
+}
+
+/* --- THINGS I WORKED ON --- */
+.section.things-worked {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s, transform 0.7s;
+}
+.section.things-worked.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+.things-title {
+  font-size: clamp(40px, 12vw, 100px);
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-top: 80px;
+  margin-bottom: 32px;
+  text-align: center;
+  font-family: inherit;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.7s, transform 0.7s;
+}
+.section.things-worked.visible .things-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- THINGS I'M WORKING ON --- */
+.section.things-working {
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s, transform 0.7s;
+}
+.section.things-working.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+.section.things-working .things-title {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.7s, transform 0.7s;
+  margin-top: 230px;
+}
+.section.things-working.visible .things-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- ARROW --- */
+.arrow {
+  position: absolute;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%);
+  font-size: 32px;
+  color: #aaa;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* --- FAN BLOCK (исправленный веер) --- */
+.fan-block {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin: 40px auto 0 auto;
+  cursor: pointer;
+  position: relative;
+  height: 480px;
+  width: 780px;
+  z-index: 3;
+  transition: box-shadow 0.3s;
+}
+.fan-img {
+  width: 330px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transition: transform 0.4s cubic-bezier(.77,0,.18,1), z-index 0.2s, mask-image 1s cubic-bezier(0.4, 0, 0.2, 1), -webkit-mask-image 1s cubic-bezier(0.4, 0, 0.2, 1);
+  mask-image: linear-gradient(to bottom, black 60%, rgba(0,0,0,0.8) 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, rgba(0,0,0,0.8) 80%, transparent 100%);
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+.fan-img.left {
+  transform: translate(-50%, 0) translateX(-120px) translateY(75px) rotate(-18deg) scale(0.92);
+  z-index: 2;
+}
+.fan-img.center {
+  transform: translate(-50%, 0) rotate(0deg) scale(1);
+  z-index: 1;
+  filter: brightness(0.8);
+}
+.fan-img.right {
+  transform: translate(-50%, 0) translateX(120px) translateY(75px) rotate(18deg) scale(0.92);
+  z-index: 2;
+}
+.fan-block:hover .fan-img.left {
+  transform: translate(-50%, 0) translateX(-210px) translateY(15px) rotate(-22deg) scale(0.92);
+  filter: brightness(0.85);
+}
+.fan-block:hover .fan-img.right {
+  transform: translate(-50%, 0) translateX(210px) translateY(15px) rotate(22deg) scale(0.92);
+  filter: brightness(0.85);
+}
+.fan-block:hover .fan-img.center {
+  transform: translate(-50%, -80px) scale(1.12) rotate(0deg);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.35);
+  filter: brightness(1.0);
+}
+
+/* --- SOCIAL BAR (оставляем как было) --- */
+.social-bar {
+  width: 100vw;
+  background: rgba(10,24,51,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 16px 32px 8px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-sizing: border-box;
+}
+.social-link {
+  display: flex;
+  align-items: center;
+  color: #b3c6e0;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: inherit;
+  margin-left: 18px;
+  transition: color 0.2s;
+}
+.social-link:hover {
+  color: #0077b5;
+}
+.social-icon {
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.blobs-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.7;
+  transition: background 1s, left 1s, top 1s;
+  will-change: background, left, top;
+}
+.hi-title, .who-title, .who-desc-text, .things-title, .social-link, .fan-block, .fan-img, .arrow, .main-title, body, html {
+  font-family: 'Inter', Helvetica, Arial, sans-serif !important;
+}
+@media (max-width: 700px) {
+  .hi-title {
+    font-size: 80px;
   }
-  
-  
-.indexdiv {
-    text-align: center;
-}
-  
-.center {
-    border: 1px solid black;
-    border-spacing: 10px;
-    gap: 10px;
-    text-align: center;
-    margin: 0 auto 0 auto;
-}
-  
-table.center {
-    margin-left: auto; 
-    margin-right: auto;
+  .who-title, .things-title {
+    font-size: 24px;
+  }
+  .who-desc-text {
+    font-size: 16px;
+    padding: 16px 8px 16px 8px;
+  }
+  .fan-block {
+    width: 220px;
+    height: 120px;
+  }
+  .fan-img {
+    width: 90px;
+    height: 120px;
+  }
+  .fan-img.left {
+    transform: translate(-50%, 0) translateX(-55px) translateY(20px) rotate(-18deg) scale(0.92);
+  }
+  .fan-img.center {
+    transform: translate(-50%, 0) rotate(0deg) scale(1);
+  }
+  .fan-img.right {
+    transform: translate(-50%, 0) translateX(55px) translateY(20px) rotate(18deg) scale(0.92);
+  }
+  .fan-block:hover .fan-img.left {
+    transform: translate(-50%, 0) translateX(-60px) translateY(5px) rotate(-22deg) scale(0.92);
+  }
+  .fan-block:hover .fan-img.right {
+    transform: translate(-50%, 0) translateX(60px) translateY(5px) rotate(22deg) scale(0.92);
+  }
+  .fan-block:hover .fan-img.center {
+    transform: translate(-50%, -30px) scale(1.08) rotate(0deg);
+  }
+  .social-bar {
+    padding: 8px 8px 4px 0;
+  }
+  .social-link {
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  .social-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 4px;
+  }
 }
