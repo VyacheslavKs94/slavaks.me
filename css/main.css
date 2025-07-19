@@ -4,6 +4,9 @@ html, body {
   padding: 0;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "San Francisco", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 body {
   min-height: 100vh;
@@ -11,6 +14,8 @@ body {
   color: #fff;
   font-family: inherit;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 .centered {
   position: absolute;
@@ -18,7 +23,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  width: 100vw;
+  width: 100%;
   pointer-events: none;
   z-index: 2;
 }
@@ -91,7 +96,7 @@ body {
 }
 .who-desc-block {
   position: relative;
-  width: 100vw;
+  width: 100%;
   max-width: 900px;
   min-height: 180px;
   display: flex;
@@ -285,7 +290,7 @@ body {
 
 /* --- SOCIAL BAR (оставляем как было) --- */
 .social-bar {
-  width: 100vw;
+  width: 100%;
   background: rgba(10,24,51,0.95);
   display: flex;
   align-items: center;
@@ -319,7 +324,7 @@ body {
 }
 .blobs-bg {
   position: fixed;
-  top: 0; left: 0; width: 100vw; height: 100vh;
+  top: 0; left: 0; width: 100%; height: 100vh;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
@@ -337,6 +342,12 @@ body {
   font-family: 'Inter', Helvetica, Arial, sans-serif !important;
 }
 @media (max-width: 700px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+  
   .hi-title {
     font-size: 80px;
   }
@@ -375,6 +386,8 @@ body {
   }
   .social-bar {
     padding: 8px 8px 4px 0;
+    width: 100%;
+    max-width: 100%;
   }
   .social-link {
     font-size: 16px;
