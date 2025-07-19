@@ -4,9 +4,6 @@ html, body {
   padding: 0;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "San Francisco", Helvetica, Arial, sans-serif;
-  overflow-x: hidden;
-  width: 100%;
-  position: relative;
 }
 body {
   min-height: 100vh;
@@ -14,8 +11,6 @@ body {
   color: #fff;
   font-family: inherit;
   overflow-x: hidden;
-  width: 100%;
-  position: relative;
 }
 .centered {
   position: absolute;
@@ -23,7 +18,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  width: 100%;
+  width: 100vw;
   pointer-events: none;
   z-index: 2;
 }
@@ -96,7 +91,7 @@ body {
 }
 .who-desc-block {
   position: relative;
-  width: 100%;
+  width: 100vw;
   max-width: 900px;
   min-height: 180px;
   display: flex;
@@ -290,7 +285,7 @@ body {
 
 /* --- SOCIAL BAR (оставляем как было) --- */
 .social-bar {
-  width: 100%;
+  width: 100vw;
   background: rgba(10,24,51,0.95);
   display: flex;
   align-items: center;
@@ -324,30 +319,28 @@ body {
 }
 .blobs-bg {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100vh;
+  top: 0; left: 0; width: 100vw; height: 100vh;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .blob {
   position: absolute;
   border-radius: 50%;
   filter: blur(60px);
   opacity: 0.7;
-  transition: background 1.5s ease-out, transform 0.8s ease-out;
-  will-change: transform, background;
-  transform-origin: center center;
+  transition: background 0.8s ease-out, left 0.8s ease-out, top 0.8s ease-out;
+  will-change: background, left, top;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
 }
 .hi-title, .who-title, .who-desc-text, .things-title, .social-link, .fan-block, .fan-img, .arrow, .main-title, body, html {
   font-family: 'Inter', Helvetica, Arial, sans-serif !important;
 }
 @media (max-width: 700px) {
-  html, body {
-    overflow-x: hidden;
-    width: 100%;
-    max-width: 100%;
-  }
-  
   .hi-title {
     font-size: 80px;
   }
@@ -386,8 +379,6 @@ body {
   }
   .social-bar {
     padding: 8px 8px 4px 0;
-    width: 100%;
-    max-width: 100%;
   }
   .social-link {
     font-size: 16px;
@@ -397,5 +388,10 @@ body {
     width: 20px;
     height: 20px;
     margin-right: 4px;
+  }
+  /* Оптимизация блобов для мобильных устройств */
+  .blob {
+    filter: blur(40px);
+    opacity: 0.6;
   }
 }

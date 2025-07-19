@@ -4,6 +4,20 @@ const workedSection = document.getElementById('workedSection');
 const workingSection = document.getElementById('workingSection');
 const arrow = document.getElementById('arrow');
 
+// Throttling функция для оптимизации производительности
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  }
+}
+
 function onScroll() {
   const scrollY = window.scrollY;
   const wh = window.innerHeight;
@@ -33,8 +47,11 @@ function onScroll() {
   }
 }
 
-window.addEventListener('scroll', onScroll);
-window.addEventListener('resize', onScroll);
+// Применяем throttling к функции скролла
+const throttledOnScroll = throttle(onScroll, 16); // ~60fps
+
+window.addEventListener('scroll', throttledOnScroll);
+window.addEventListener('resize', throttledOnScroll);
 
 document.body.style.minHeight = '250vh';
 
@@ -53,7 +70,10 @@ const blobColors = [
   'hsl(190, 60%, 22%)', // глубокий сине-зелёный
   'hsl(50, 40%, 30%)',  // тёмно-жёлтый
 ];
-const blobsCount = 4;
+
+// Адаптивное количество блобов в зависимости от размера экрана
+const isMobile = window.innerWidth <= 700;
+const blobsCount = isMobile ? 2 : 4;
 const blobs = [];
 const blobsBg = document.querySelector('.blobs-bg');
 
@@ -61,11 +81,16 @@ function createBlobs() {
   for (let i = 0; i < blobsCount; i++) {
     const blob = document.createElement('div');
     blob.className = 'blob';
-    blob.style.width = blob.style.height = `${320 + Math.random()*180}px`;
+    
+    // Адаптивный размер блобов
+    const baseSize = isMobile ? 200 : 320;
+    const sizeVariation = isMobile ? 100 : 180;
+    const size = baseSize + Math.random() * sizeVariation;
+    
+    blob.style.width = blob.style.height = `${size}px`;
     blob.style.left = `${10 + i*20 + Math.random()*20}%`;
     blob.style.top = `${20 + i*15 + Math.random()*10}%`;
     blob.style.background = blobColors[i % blobColors.length];
-    blob.style.willChange = 'transform, background';
     blobsBg.appendChild(blob);
     blobs.push(blob);
   }
@@ -74,51 +99,44 @@ function createBlobs() {
 function updateBlobsOnScroll() {
   const scrollY = window.scrollY;
   const wh = window.innerHeight;
-  const maxScroll = document.body.scrollHeight - wh;
-  const scrollProgress = Math.min(scrollY / maxScroll, 1);
-  
   blobs.forEach((blob, i) => {
-    // Более плавное изменение цвета
-    const colorIdx = Math.floor((i + scrollProgress * 2) % blobColors.length);
-    const nextColorIdx = (colorIdx + 1) % blobColors.length;
-    const colorProgress = (i + scrollProgress * 2) % 1;
+    // Цвет зависит от scrollY и номера пятна
+    const colorIdx = (i + Math.floor(scrollY / (wh/2))) % blobColors.length;
+    blob.style.background = blobColors[colorIdx];
     
-    // Интерполяция между цветами для более плавного перехода
-    const currentColor = blobColors[colorIdx];
-    const nextColor = blobColors[nextColorIdx];
-    blob.style.background = currentColor; // Пока оставляем простой переход
-    
-    // Уменьшенная амплитуда движения - используем transform вместо left/top
+    // Базовые позиции для каждого блоба
     const baseLeft = 10 + i*20;
     const baseTop = 20 + i*15;
     
-    // Более плавное движение с меньшей амплитудой
-    const moveX = 6 * Math.sin(scrollY/300 + i*1.2); // Уменьшил с 12 до 6
-    const moveY = 5 * Math.cos(scrollY/250 + i*2);   // Уменьшил с 10 до 5
+    // Анимация позиции с ограничениями (меньше движения на мобильных)
+    const movementScale = isMobile ? 0.6 : 1;
+    const leftOffset = 8 * movementScale * Math.sin(scrollY/300 + i*1.2);
+    const topOffset = 6 * movementScale * Math.cos(scrollY/250 + i*2);
     
-    // Используем transform для лучшей производительности
-    blob.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    // Ограничиваем позиции, чтобы блобы не уезжали за пределы экрана
+    const left = Math.max(-10, Math.min(90, baseLeft + leftOffset));
+    const top = Math.max(-10, Math.min(80, baseTop + topOffset));
     
-    // Оставляем базовое положение через left/top для стабильности
-    blob.style.left = `${baseLeft}%`;
-    blob.style.top = `${baseTop}%`;
+    blob.style.left = `${left}%`;
+    blob.style.top = `${top}%`;
   });
 }
 
-// Оптимизация производительности - ограничиваем частоту обновления
-let ticking = false;
+createBlobs();
+// Применяем throttling к функции обновления блобов
+const throttledUpdateBlobs = throttle(updateBlobsOnScroll, 16);
+window.addEventListener('scroll', throttledUpdateBlobs);
 
-function requestTick() {
-  if (!ticking) {
-    requestAnimationFrame(() => {
-      updateBlobsOnScroll();
-      ticking = false;
-    });
-    ticking = true;
-  }
+// Обработчик изменения размера окна
+function handleResize() {
+  // Очищаем старые блобы
+  blobsBg.innerHTML = '';
+  blobs.length = 0;
+  
+  // Пересоздаем блобы с новыми параметрами
+  createBlobs();
+  updateBlobsOnScroll();
 }
 
-createBlobs();
-window.addEventListener('scroll', requestTick);
-window.addEventListener('resize', requestTick);
+window.addEventListener('resize', throttle(handleResize, 250));
 updateBlobsOnScroll(); 
