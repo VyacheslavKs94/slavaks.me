@@ -65,6 +65,7 @@ function createBlobs() {
     blob.style.left = `${10 + i*20 + Math.random()*20}%`;
     blob.style.top = `${20 + i*15 + Math.random()*10}%`;
     blob.style.background = blobColors[i % blobColors.length];
+    blob.style.willChange = 'transform, background';
     blobsBg.appendChild(blob);
     blobs.push(blob);
   }
@@ -73,21 +74,51 @@ function createBlobs() {
 function updateBlobsOnScroll() {
   const scrollY = window.scrollY;
   const wh = window.innerHeight;
+  const maxScroll = document.body.scrollHeight - wh;
+  const scrollProgress = Math.min(scrollY / maxScroll, 1);
+  
   blobs.forEach((blob, i) => {
-    // Цвет зависит от scrollY и номера пятна
-    const colorIdx = (i + Math.floor(scrollY / (wh/2))) % blobColors.length;
-    blob.style.background = blobColors[colorIdx];
-    // Положение зависит только от scrollY
+    // Более плавное изменение цвета
+    const colorIdx = Math.floor((i + scrollProgress * 2) % blobColors.length);
+    const nextColorIdx = (colorIdx + 1) % blobColors.length;
+    const colorProgress = (i + scrollProgress * 2) % 1;
+    
+    // Интерполяция между цветами для более плавного перехода
+    const currentColor = blobColors[colorIdx];
+    const nextColor = blobColors[nextColorIdx];
+    blob.style.background = currentColor; // Пока оставляем простой переход
+    
+    // Уменьшенная амплитуда движения - используем transform вместо left/top
     const baseLeft = 10 + i*20;
     const baseTop = 20 + i*15;
-    const left = baseLeft + 12*Math.sin(scrollY/200 + i*1.2);
-    const top = baseTop + 10*Math.cos(scrollY/180 + i*2);
-    blob.style.left = `${left}%`;
-    blob.style.top = `${top}%`;
+    
+    // Более плавное движение с меньшей амплитудой
+    const moveX = 6 * Math.sin(scrollY/300 + i*1.2); // Уменьшил с 12 до 6
+    const moveY = 5 * Math.cos(scrollY/250 + i*2);   // Уменьшил с 10 до 5
+    
+    // Используем transform для лучшей производительности
+    blob.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    
+    // Оставляем базовое положение через left/top для стабильности
+    blob.style.left = `${baseLeft}%`;
+    blob.style.top = `${baseTop}%`;
   });
 }
 
+// Оптимизация производительности - ограничиваем частоту обновления
+let ticking = false;
+
+function requestTick() {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      updateBlobsOnScroll();
+      ticking = false;
+    });
+    ticking = true;
+  }
+}
+
 createBlobs();
-window.addEventListener('scroll', updateBlobsOnScroll);
-window.addEventListener('resize', updateBlobsOnScroll);
+window.addEventListener('scroll', requestTick);
+window.addEventListener('resize', requestTick);
 updateBlobsOnScroll(); 
