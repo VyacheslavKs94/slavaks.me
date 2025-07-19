@@ -73,12 +73,12 @@ const blobColors = [
 
 // Адаптивное количество блобов в зависимости от размера экрана
 const isMobile = window.innerWidth <= 700;
-const blobsCount = isMobile ? 2 : 4;
+const blobsCount = isMobile ? 3 : 5;
 const blobs = [];
 const blobsBg = document.querySelector('.blobs-bg');
 
-// Храним текущие цвета блобов для плавных переходов
-const currentBlobColors = [];
+// Храним состояние каждого блоба
+const blobStates = [];
 
 function createBlobs() {
   for (let i = 0; i < blobsCount; i++) {
@@ -86,76 +86,104 @@ function createBlobs() {
     blob.className = 'blob';
     
     // Адаптивный размер блобов
-    const baseSize = isMobile ? 200 : 320;
-    const sizeVariation = isMobile ? 100 : 180;
+    const baseSize = isMobile ? 150 : 250;
+    const sizeVariation = isMobile ? 80 : 120;
     const size = baseSize + Math.random() * sizeVariation;
     
     blob.style.width = blob.style.height = `${size}px`;
-    blob.style.left = `${10 + i*20 + Math.random()*20}%`;
-    blob.style.top = `${20 + i*15 + Math.random()*10}%`;
+    
+    // Рандомная начальная позиция по всему экрану
+    const startX = Math.random() * 80 + 10; // 10-90%
+    const startY = Math.random() * 80 + 10; // 10-90%
+    blob.style.left = `${startX}%`;
+    blob.style.top = `${startY}%`;
     
     // Инициализируем цвет
-    const initialColor = blobColors[i % blobColors.length];
+    const initialColor = blobColors[Math.floor(Math.random() * blobColors.length)];
     blob.style.background = initialColor;
-    currentBlobColors[i] = initialColor;
     
+    // Создаём состояние блоба
+    const state = {
+      x: startX,
+      y: startY,
+      vx: (Math.random() - 0.5) * 0.15, // медленная начальная скорость по X
+      vy: (Math.random() - 0.5) * 0.15, // медленная начальная скорость по Y
+      color: initialColor,
+      colorChangeTime: Date.now() + Math.random() * 5000, // время следующей смены цвета
+      size: size
+    };
+    
+    blobStates.push(state);
     blobsBg.appendChild(blob);
     blobs.push(blob);
   }
 }
 
-function updateBlobsOnScroll() {
-  const scrollY = window.scrollY;
-  const wh = window.innerHeight;
+function animateBlobs() {
+  const currentTime = Date.now();
+  
   blobs.forEach((blob, i) => {
-    // Плавная смена цвета без резких скачков
-    const scrollProgress = scrollY / (wh * 3); // Ещё более медленная смена цветов
-    const colorProgress = (scrollProgress + i * 0.3) % 1; // Смещение для каждого блоба
+    const state = blobStates[i];
     
-    // Определяем целевой цвет
-    const targetColorIndex = Math.floor(colorProgress * blobColors.length);
-    const targetColor = blobColors[targetColorIndex];
+    // Обновляем позицию
+    state.x += state.vx;
+    state.y += state.vy;
     
-    // Применяем цвет только если он изменился
-    if (currentBlobColors[i] !== targetColor) {
-      blob.style.background = targetColor;
-      currentBlobColors[i] = targetColor;
+    // Отскок от границ экрана
+    if (state.x <= 5 || state.x >= 85) {
+      state.vx *= -1;
+      state.x = Math.max(5, Math.min(85, state.x));
+    }
+    if (state.y <= 5 || state.y >= 85) {
+      state.vy *= -1;
+      state.y = Math.max(5, Math.min(85, state.y));
     }
     
-    // Базовые позиции для каждого блоба
-    const baseLeft = 10 + i*20;
-    const baseTop = 20 + i*15;
+    // Случайное изменение направления (небольшое)
+    if (Math.random() < 0.005) { // уменьшаем частоту изменений
+      state.vx += (Math.random() - 0.5) * 0.05; // уменьшаем силу изменений
+      state.vy += (Math.random() - 0.5) * 0.05;
+    }
     
-    // Анимация позиции с ограничениями (меньше движения на мобильных)
-    const movementScale = isMobile ? 0.6 : 1;
-    const leftOffset = 8 * movementScale * Math.sin(scrollY/300 + i*1.2);
-    const topOffset = 6 * movementScale * Math.cos(scrollY/250 + i*2);
+    // Ограничиваем скорость
+    const maxSpeed = 0.25; // медленная максимальная скорость
+    state.vx = Math.max(-maxSpeed, Math.min(maxSpeed, state.vx));
+    state.vy = Math.max(-maxSpeed, Math.min(maxSpeed, state.vy));
     
-    // Ограничиваем позиции, чтобы блобы не уезжали за пределы экрана
-    const left = Math.max(-10, Math.min(90, baseLeft + leftOffset));
-    const top = Math.max(-10, Math.min(80, baseTop + topOffset));
+    // Смена цвета
+    if (currentTime > state.colorChangeTime) {
+      const currentColorIndex = blobColors.indexOf(state.color);
+      const nextColorIndex = (currentColorIndex + 1) % blobColors.length;
+      state.color = blobColors[nextColorIndex];
+      blob.style.background = state.color;
+      state.colorChangeTime = currentTime + 6000 + Math.random() * 4000; // 6-10 секунд
+    }
     
-    blob.style.left = `${left}%`;
-    blob.style.top = `${top}%`;
+    // Применяем новую позицию
+    blob.style.left = `${state.x}%`;
+    blob.style.top = `${state.y}%`;
   });
+  
+  // Планируем следующее обновление
+  requestAnimationFrame(animateBlobs);
 }
 
+
+
 createBlobs();
-// Применяем throttling к функции обновления блобов
-const throttledUpdateBlobs = throttle(updateBlobsOnScroll, 32); // Увеличиваем интервал для более плавных переходов
-window.addEventListener('scroll', throttledUpdateBlobs);
+// Запускаем анимацию блобов
+animateBlobs();
 
 // Обработчик изменения размера окна
 function handleResize() {
   // Очищаем старые блобы
   blobsBg.innerHTML = '';
   blobs.length = 0;
-  currentBlobColors.length = 0; // Очищаем массив цветов
+  blobStates.length = 0; // Очищаем массив состояний
   
   // Пересоздаем блобы с новыми параметрами
   createBlobs();
-  updateBlobsOnScroll();
+  animateBlobs(); // Перезапускаем анимацию
 }
 
-window.addEventListener('resize', throttle(handleResize, 250));
-updateBlobsOnScroll(); 
+window.addEventListener('resize', throttle(handleResize, 250)); 
