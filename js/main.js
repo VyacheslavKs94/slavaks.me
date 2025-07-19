@@ -25,21 +25,50 @@ function onScroll() {
   // Скрытие стрелки
   arrow.style.opacity = scrollY < 40 ? '0.7' : '0';
 
-  // WHO AM I появляется после 10% первого экрана
+  // Получаем ссылки навигации
+  const whoLink = document.querySelector('a[href="#whoSection"]');
+  const workedLink = document.querySelector('a[href="#workedSection"]');
+  const workingLink = document.querySelector('a[href="#workingSection"]');
+
+  // Получаем реальные координаты секций
+  const whoSectionRect = whoSection.getBoundingClientRect();
+  const workedSectionRect = workedSection.getBoundingClientRect();
+  const workingSectionRect = workingSection.getBoundingClientRect();
+
+  // WHO AM I - подсвечиваем когда секция видна в верхней части экрана
+  if (whoSectionRect.top <= wh * 0.3 && whoSectionRect.bottom >= wh * 0.3) {
+    whoLink.classList.add('active');
+  } else {
+    whoLink.classList.remove('active');
+  }
+
+  // THINGS I WORKED ON - подсвечиваем когда секция видна в верхней части экрана
+  if (workedSectionRect.top <= wh * 0.3 && workedSectionRect.bottom >= wh * 0.3) {
+    workedLink.classList.add('active');
+  } else {
+    workedLink.classList.remove('active');
+  }
+
+  // THINGS I'M WORKING ON - подсвечиваем когда секция видна в верхней части экрана
+  if (workingSectionRect.top <= wh * 0.3 && workingSectionRect.bottom >= wh * 0.3) {
+    workingLink.classList.add('active');
+  } else {
+    workingLink.classList.remove('active');
+  }
+
+  // Показываем секции (оставляем старую логику для анимации появления)
   if (scrollY > wh * 0.1) {
     whoSection.classList.add('visible');
   } else {
     whoSection.classList.remove('visible');
   }
 
-  // THINGS I WORKED ON появляется после 30% экранов
   if (scrollY > wh * 0.3) {
     workedSection.classList.add('visible');
   } else {
     workedSection.classList.remove('visible');
   }
 
-  // THINGS I'M WORKING ON появляется после 50% экранов
   if (scrollY > wh * 0.5) {
     workingSection.classList.add('visible');
   } else {
