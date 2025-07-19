@@ -30,6 +30,10 @@ function onScroll() {
   const workedLink = document.querySelector('a[href="#workedSection"]');
   const workingLink = document.querySelector('a[href="#workingSection"]');
 
+  // Получаем вееры
+  const workedFan = document.querySelector('#workedSection .fan-block');
+  const workingFan = document.querySelector('#workingSection .fan-block');
+
   // Получаем реальные координаты секций
   const whoSectionRect = whoSection.getBoundingClientRect();
   const workedSectionRect = workedSection.getBoundingClientRect();
@@ -54,6 +58,42 @@ function onScroll() {
     workingLink.classList.add('active');
   } else {
     workingLink.classList.remove('active');
+  }
+
+  // Анимация веера для THINGS I WORKED ON
+  if (workedSectionRect.top <= wh * 0.5 && workedSectionRect.bottom >= wh * 0.5) {
+    if (!workedFan.classList.contains('animate') && !workedFan.classList.contains('animated')) {
+      workedFan.classList.add('animate');
+      // Убираем класс animate после завершения анимации
+      setTimeout(() => {
+        workedFan.classList.remove('animate');
+        // Добавляем класс для временного отключения hover эффектов
+        workedFan.classList.add('animation-complete');
+        // Через небольшую паузу активируем hover эффекты
+        setTimeout(() => {
+          workedFan.classList.remove('animation-complete');
+          workedFan.classList.add('animated');
+        }, 300);
+      }, 2000); // 1.2s анимация + 0.4s задержка + запас
+    }
+  }
+
+  // Анимация веера для THINGS I'M WORKING ON
+  if (workingSectionRect.top <= wh * 0.5 && workingSectionRect.bottom >= wh * 0.5) {
+    if (!workingFan.classList.contains('animate') && !workingFan.classList.contains('animated')) {
+      workingFan.classList.add('animate');
+      // Убираем класс animate после завершения анимации
+      setTimeout(() => {
+        workingFan.classList.remove('animate');
+        // Добавляем класс для временного отключения hover эффектов
+        workingFan.classList.add('animation-complete');
+        // Через небольшую паузу активируем hover эффекты
+        setTimeout(() => {
+          workingFan.classList.remove('animation-complete');
+          workingFan.classList.add('animated');
+        }, 300);
+      }, 2000); // 1.2s анимация + 0.4s задержка + запас
+    }
   }
 
   // Показываем секции (оставляем старую логику для анимации появления)
