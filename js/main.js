@@ -77,6 +77,9 @@ const blobsCount = isMobile ? 2 : 4;
 const blobs = [];
 const blobsBg = document.querySelector('.blobs-bg');
 
+// Храним текущие цвета блобов для плавных переходов
+const currentBlobColors = [];
+
 function createBlobs() {
   for (let i = 0; i < blobsCount; i++) {
     const blob = document.createElement('div');
@@ -90,7 +93,12 @@ function createBlobs() {
     blob.style.width = blob.style.height = `${size}px`;
     blob.style.left = `${10 + i*20 + Math.random()*20}%`;
     blob.style.top = `${20 + i*15 + Math.random()*10}%`;
-    blob.style.background = blobColors[i % blobColors.length];
+    
+    // Инициализируем цвет
+    const initialColor = blobColors[i % blobColors.length];
+    blob.style.background = initialColor;
+    currentBlobColors[i] = initialColor;
+    
     blobsBg.appendChild(blob);
     blobs.push(blob);
   }
@@ -100,9 +108,19 @@ function updateBlobsOnScroll() {
   const scrollY = window.scrollY;
   const wh = window.innerHeight;
   blobs.forEach((blob, i) => {
-    // Цвет зависит от scrollY и номера пятна
-    const colorIdx = (i + Math.floor(scrollY / (wh/2))) % blobColors.length;
-    blob.style.background = blobColors[colorIdx];
+    // Плавная смена цвета без резких скачков
+    const scrollProgress = scrollY / (wh * 3); // Ещё более медленная смена цветов
+    const colorProgress = (scrollProgress + i * 0.3) % 1; // Смещение для каждого блоба
+    
+    // Определяем целевой цвет
+    const targetColorIndex = Math.floor(colorProgress * blobColors.length);
+    const targetColor = blobColors[targetColorIndex];
+    
+    // Применяем цвет только если он изменился
+    if (currentBlobColors[i] !== targetColor) {
+      blob.style.background = targetColor;
+      currentBlobColors[i] = targetColor;
+    }
     
     // Базовые позиции для каждого блоба
     const baseLeft = 10 + i*20;
@@ -124,7 +142,7 @@ function updateBlobsOnScroll() {
 
 createBlobs();
 // Применяем throttling к функции обновления блобов
-const throttledUpdateBlobs = throttle(updateBlobsOnScroll, 16);
+const throttledUpdateBlobs = throttle(updateBlobsOnScroll, 32); // Увеличиваем интервал для более плавных переходов
 window.addEventListener('scroll', throttledUpdateBlobs);
 
 // Обработчик изменения размера окна
@@ -132,6 +150,7 @@ function handleResize() {
   // Очищаем старые блобы
   blobsBg.innerHTML = '';
   blobs.length = 0;
+  currentBlobColors.length = 0; // Очищаем массив цветов
   
   // Пересоздаем блобы с новыми параметрами
   createBlobs();
