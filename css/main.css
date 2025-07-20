@@ -586,6 +586,22 @@ body {
     filter: blur(40px);
     opacity: 0.6;
   }
+  .be-bg {
+    left: 80%;
+    top: 75%;
+    width: 40vw;
+    max-width: 40vw;
+    min-width: 0;
+    transform: translate(-50%, -50%);
+  }
+  .omnom-bg {
+    left: 20%;
+    top: 45%;
+    width: 40vw;
+    max-width: 40vw;
+    min-width: 0;
+    transform: translate(-50%, -50%);
+  }
 }
 
 /* Дополнительные медиа-запросы для разных уровней масштабирования */
@@ -622,5 +638,25 @@ body {
   .fan-img {
     width: 330px;
     height: 450px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .fan-block.animated:hover .fan-img.left,
+  .fan-block.animated:hover .fan-img.center,
+  .fan-block.animated:hover .fan-img.right {
+    /* Отключаем hover-эффекты полностью */
+  }
+  .fan-block.animated .fan-img.left {
+    transform: translate(-50%, 0) translateX(-55px) translateY(20px) rotate(-18deg) scale(0.92) !important;
+    opacity: 1 !important;
+  }
+  .fan-block.animated .fan-img.center {
+    transform: translate(-50%, 0) rotate(0deg) scale(1) !important;
+    opacity: 1 !important;
+  }
+  .fan-block.animated .fan-img.right {
+    transform: translate(-50%, 0) translateX(55px) translateY(20px) rotate(18deg) scale(0.92) !important;
+    opacity: 1 !important;
   }
 }
