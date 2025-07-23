@@ -224,8 +224,34 @@ body {
   color: #aaa;
   opacity: 0.7;
   transition: opacity 0.3s;
-  z-index: 2;
-  pointer-events: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.arrow-fixed {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  left: auto;
+  top: auto;
+  transform: none;
+  font-size: 40px;
+  color: #aaa;
+  opacity: 0.8;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  background: rgba(10,24,51,0.85);
+  transition: opacity 0.3s, background 0.3s, color 0.3s;
+  cursor: pointer;
+}
+.arrow-fixed:hover {
+  color: #fff;
+  background: rgba(10,24,51,1);
+  opacity: 1;
 }
 
 /* --- FAN BLOCK (исправленный веер) --- */
@@ -453,6 +479,14 @@ body {
 }
 .hi-title, .who-title, .who-desc-text, .things-title, .social-link, .fan-block, .fan-img, .arrow, .main-title, body, html {
   font-family: 'Inter', Helvetica, Arial, sans-serif !important;
+}
+.section {
+  z-index: 1;
+  position: relative;
+}
+.arrow-fixed {
+  z-index: 9999 !important;
+  pointer-events: auto !important;
 }
 @media (max-width: 700px) {
   .hi-title {

@@ -22,8 +22,18 @@ function onScroll() {
   const scrollY = window.scrollY;
   const wh = window.innerHeight;
 
+  // Управляем pointer-events секций в зависимости от opacity
+  [whoSection, workedSection, workingSection].forEach(section => {
+    const opacity = parseFloat(window.getComputedStyle(section).opacity);
+    if (opacity < 1) {
+      section.style.pointerEvents = 'none';
+    } else {
+      section.style.pointerEvents = 'auto';
+    }
+  });
+
   // Скрытие стрелки
-  arrow.style.opacity = scrollY < 40 ? '0.7' : '0';
+  // arrow.style.opacity = scrollY < 40 ? '0.7' : '0'; // УДАЛЕНО, теперь управляет только updateArrow
 
   // Получаем ссылки навигации
   const whoLink = document.querySelector('a[href="#whoSection"]');
@@ -125,6 +135,42 @@ window.addEventListener('resize', throttledOnScroll);
 document.body.style.minHeight = '250vh';
 
 onScroll();
+
+function updateArrow() {
+  const scrollY = window.scrollY;
+  if (scrollY === 0) {
+    arrow.classList.remove('arrow-fixed');
+    arrow.innerHTML = '↓';
+    arrow.onclick = function() {
+      console.log('arrow click: scroll to whoSection');
+      whoSection.scrollIntoView({ behavior: 'smooth' });
+    };
+    arrow.style.opacity = '0.7';
+    arrow.style.pointerEvents = 'auto';
+    arrow.style.zIndex = '2147483647';
+  } else {
+    arrow.classList.add('arrow-fixed');
+    arrow.innerHTML = '↑';
+    arrow.onclick = function() {
+      console.log('arrow click: scroll to top');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    arrow.style.opacity = '0.8';
+    arrow.style.pointerEvents = 'auto';
+    arrow.style.zIndex = '2147483647';
+  }
+  // Стрелка всегда последний элемент в body
+  if (arrow && arrow.parentNode !== document.body) {
+    document.body.appendChild(arrow);
+  } else if (arrow && document.body.lastChild !== arrow) {
+    document.body.appendChild(arrow);
+  }
+}
+
+window.addEventListener('scroll', updateArrow);
+window.addEventListener('resize', updateArrow);
+document.addEventListener('DOMContentLoaded', updateArrow);
+updateArrow();
 
 // === BLOBS BACKGROUND ===
 const blobColors = [
